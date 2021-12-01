@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyClientRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
@@ -11,16 +12,51 @@ use App\Models\ClientFee;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ClientsController extends Controller
 {
-    public function index()
+    use CsvImportTrait;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clients = Client::with(['fees'])->get();
+        if ($request->ajax()) {
+            $query = Client::with(['fees'])->select(sprintf('%s.*', (new Client())->table));
+            $table = Datatables::of($query);
 
-        return view('admin.clients.index', compact('clients'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'client_show';
+                $editGate = 'client_edit';
+                $deleteGate = 'client_delete';
+                $crudRoutePart = 'clients';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('client_name', function ($row) {
+                return $row->client_name ? $row->client_name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.clients.index');
     }
 
     public function create()
