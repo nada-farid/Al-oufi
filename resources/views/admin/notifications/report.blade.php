@@ -1,14 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@can('notification_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.notifications.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.notification.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.notification.title_singular') }} {{ trans('global.list') }}
@@ -40,9 +31,6 @@
                         <th>
                             {{ trans('cruds.notification.fields.appearance') }}
                         </th>
-                        <th>
-                            &nbsp;
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,34 +57,11 @@
                             <td>
                                 {{ App\Models\Notification::APPEARANCE_SELECT[$notification->appearance] ?? '' }}
                             </td>
-                            <td>
-                                @can('notification_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.notifications.show', $notification->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-
-                                @can('notification_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.notifications.edit', $notification->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-
-                                @can('notification_delete')
-                                    <form action="{{ route('admin.notifications.destroy', $notification->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
 
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <a class="btn btn-xs btn-info" href="{{ route('admin.notifications.report') }}">Preview</a>
         </div>
     </div>
 </div>

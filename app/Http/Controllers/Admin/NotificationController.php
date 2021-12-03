@@ -13,6 +13,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class NotificationController extends Controller
 {
@@ -25,6 +26,14 @@ class NotificationController extends Controller
         $notifications = Notification::with(['client', 'media'])->get();
 
         return view('admin.notifications.index', compact('notifications'));
+    }
+    public function report()
+    {
+        abort_if(Gate::denies('notification_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $notifications = Notification::where('appearance','yes')->with(['client', 'media'])->get();
+
+        return view('admin.notifications.report', compact('notifications'));
     }
 
     public function create()
@@ -47,6 +56,8 @@ class NotificationController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $notification->id]);
         }
+
+        Alert::success('Success', 'Notification added sucessfully');
 
         return redirect()->route('admin.notifications.index');
     }
@@ -77,6 +88,7 @@ class NotificationController extends Controller
             $notification->awb_file->delete();
         }
 
+        Alert::success('Success', 'Notification info updated sucessfully');
         return redirect()->route('admin.notifications.index');
     }
 

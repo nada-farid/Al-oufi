@@ -9,7 +9,8 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.notifications.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+            <div class="row">
+            <div class="form-group col-md-4">
                 <label class="required" for="awb_no">{{ trans('cruds.notification.fields.awb_no') }}</label>
                 <input class="form-control {{ $errors->has('awb_no') ? 'is-invalid' : '' }}" type="text" name="awb_no" id="awb_no" value="{{ old('awb_no', '') }}" required>
                 @if($errors->has('awb_no'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.notification.fields.awb_no_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="required" for="client_id">{{ trans('cruds.notification.fields.client') }}</label>
                 <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
                     @foreach($clients as $id => $entry)
@@ -33,7 +34,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.notification.fields.client_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="required" for="awb_date">{{ trans('cruds.notification.fields.awb_date') }}</label>
                 <input class="form-control date {{ $errors->has('awb_date') ? 'is-invalid' : '' }}" type="text" name="awb_date" id="awb_date" value="{{ old('awb_date') }}" required>
                 @if($errors->has('awb_date'))
@@ -43,7 +44,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.notification.fields.awb_date_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="awb_file">{{ trans('cruds.notification.fields.awb_file') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('awb_file') ? 'is-invalid' : '' }}" id="awb_file-dropzone">
                 </div>
@@ -54,7 +55,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.notification.fields.awb_file_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="remarks">{{ trans('cruds.notification.fields.remarks') }}</label>
                 <textarea class="form-control {{ $errors->has('remarks') ? 'is-invalid' : '' }}" name="remarks" id="remarks">{{ old('remarks') }}</textarea>
                 @if($errors->has('remarks'))
@@ -64,7 +65,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.notification.fields.remarks_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="required">{{ trans('cruds.notification.fields.appearance') }}</label>
                 <select class="form-control {{ $errors->has('appearance') ? 'is-invalid' : '' }}" name="appearance" id="appearance" required>
                     <option value disabled {{ old('appearance', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -83,6 +84,7 @@
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+            </div>
             </div>
         </form>
     </div>

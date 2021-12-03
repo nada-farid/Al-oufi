@@ -10,7 +10,7 @@ class CreateAwbsTable extends Migration
     {
         Schema::create('awbs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('awb_no');
+            $table->string('awb_no');
             $table->integer('no_of_pcs');
             $table->string('goods_type');
             $table->integer('decleration_no');
@@ -26,6 +26,8 @@ class CreateAwbsTable extends Migration
             $table->longText('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->unsignedBigInteger('notification_id');
+            $table->foreign('notification_id', 'notification_fk_5466358')->references('id')->on('notifications');
         });
     }
 }

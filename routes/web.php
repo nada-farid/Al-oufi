@@ -36,12 +36,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('notifications/media', 'NotificationController@storeMedia')->name('notifications.storeMedia');
     Route::post('notifications/ckmedia', 'NotificationController@storeCKEditorImages')->name('notifications.storeCKEditorImages');
     Route::resource('notifications', 'NotificationController');
+    Route::get('notification/reports','NotificationController@report')->name('notifications.report');
 
     // Awb
     Route::delete('awbs/destroy', 'AwbController@massDestroy')->name('awbs.massDestroy');
     Route::post('awbs/media', 'AwbController@storeMedia')->name('awbs.storeMedia');
     Route::post('awbs/ckmedia', 'AwbController@storeCKEditorImages')->name('awbs.storeCKEditorImages');
     Route::resource('awbs', 'AwbController');
+    Route::get('awb_check', 'AwbController@check_awb')->name('awb.check');
+    Route::get('awb_date', 'AwbController@get_date')->name('awb.get_date');
+    
+    
 
     // Client Fees
     Route::delete('client-fees/destroy', 'ClientFeesController@massDestroy')->name('client-fees.massDestroy');
@@ -58,6 +63,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Invoices
     Route::delete('invoices/destroy', 'InvoicesController@massDestroy')->name('invoices.massDestroy');
     Route::resource('invoices', 'InvoicesController');
+    Route::get('invoice/reports','InvoicesController@report')->name('invoice.report');
+    
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
 });

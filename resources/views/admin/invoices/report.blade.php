@@ -1,14 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@can('invoice_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.invoices.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.invoice.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.invoice.title_singular') }} {{ trans('global.list') }}
@@ -46,9 +37,6 @@
                         <th>
                             {{ trans('cruds.invoice.fields.remarks') }}
                         </th>
-                        <th>
-                            &nbsp;
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,28 +69,6 @@
                             <td>
                                 {{ $invoice->remarks ?? '' }}
                             </td>
-                            <td>
-                                @can('invoice_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.invoices.show', $invoice->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-                               
-                               <!-- can('invoice_edit')
-                                    <a class="btn btn-xs btn-info" href=" route('admin.invoices.edit', $invoice->id) ">
-                                         trans('global.edit') 
-                                    </a>
-                                endcan !-->
-
-                                @can('invoice_delete')
-                                    <form action="{{ route('admin.invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
 
                         </tr>
                     @endforeach
@@ -114,31 +80,6 @@
         </div>
     </div>
 </div>
-<div class="card">
-    <div class="card-header">
-        <strong style="color: #00008B;">Invoices Report By date</strong>
-    </div>
-    <div class="card-body">
-            <form action="{{route('admin.invoice.report')}}">
-                @csrf
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label>From</label>
-                <input name="start_date"  class="form-control date" >
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>To</label>
-                <input name="end_date"  class="form-control date ">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-xs btn-info">preview</button>
-            </form>
-    </div>
-</div>
-    
-
-
-
 
 @endsection
 @section('scripts')

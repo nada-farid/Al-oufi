@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>«” „«—…  ⁄«ﬁœ «·√Œ «·√ﬂ»— „⁄ «·√Œ «·√’€—  </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+
+    <style >
+
+
+		table{
+			width: 100%;
+		}
+		table th{
+			font-weight: normal;
+		}
+		table.padding th{
+			padding: .5rem .7rem;
+		}
+		table.padding td{
+			padding: .7rem;
+		}
+		table.sm-padding td{
+			padding: .2rem .7rem;
+		}
+		.border-bottom td,
+		.border-bottom th{
+			border-bottom:1px solid #eceff4;
+		}
+		.text-left{
+			text-align:left;
+		}
+		.text-right{
+			text-align:right;
+		}
+		.small{
+			font-size: .85rem;
+		}
+		.currency{
+
+		}
+		div.s2 {
+   position: static;
+  height: fit-content;
+  margin-top: 50px;
+  text-align: center;
+  padding: 50px;
+
+  
+}
+        </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: center;">
+    <div  style="width: 21.59cm; height: 27.94cm ;">
+
+        <img src="{{ URL::to('images/2.jpg') }}" style="width:800px;height:100px;">
+
+
+    <h1 style=" text-align:center" ><b> <ins>  ⁄«ﬁœ »Ì‰ «·√Œ «·√ﬂ»—/«·√Œ  «·ﬂ»—Ï „⁄ «·√Œ «·√’€—/ «·√Œ  «·’€—Ï </ins></b></h1>
+
+    <h2 style="background-color: #DDD ; text-align:center">  ( {{$brothersDealForm->id}}   ) «” „«—… —ﬁ„</h2>
+    <br>
+    <br>
+<div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid #000; width: 20cm;">
+
+
+        <table style="padding: 1.5rem;float: right;position: relative;">
+			<tr>
+				<td class="text-right "  ><span >{{$brothersDealForm->day}}</span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> : —ﬁ„ «·ÂÊÌ… &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+				<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:center" >: √‰««·√Œ «·√ﬂ»—&nbsp;&nbsp;</label></td>
+			    <td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" >: ≈‰Â ›Ì ÌÊ„ &nbsp;&nbsp;</label></td>
+			</tr>
+            <tr>
+				<td class="text-right "  ><span >{{$brothersDealForm->day}}</span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> : —ﬁ„ «·ÂÊÌ… &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+				<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:center" >:   „ «· ⁄«ﬁœ „⁄  «·√Œ «·√’€—&nbsp;&nbsp;</label></td>
+				<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" > &nbsp;&nbsp;</label></td>
+			</tr>
+            <tr>
+				<td class="text-right "  ><span >{{$brothersDealForm->day}}</span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> :  »‰«¡ ⁄·Ï «·„Ê«›ﬁ… —ﬁ„  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+				<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:center" >:» «—ÌŒ &nbsp;&nbsp;</label></td>
+				<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" > &nbsp;&nbsp;</label>
+			</tr>
+
+         
+        </table>
+
+		<br>
+	</div>
+</div>
+		<div class="s2">
+			<b >Ê⁄·Ï –·ﬂ Ã—Ï «· ÊﬁÌ⁄</b>
+			<div class="row">
+   
+				<table style="padding: 1.5rem;float: right;position: relative; margin-top:50px;">
+					<tr>
+						<td class="text-right "  ><span ></span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> :  «··Ã‰… «· ‰›Ì–Ì…  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+						<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" >: ﬁ”„ «·Œœ„… «·≈Ã „«⁄Ì…&nbsp;&nbsp;</label></td>
+					</tr>
+					<tr>
+						<td class="text-right "  ><span ></span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> :   «·„œÌ— «· ‰›Ì–Ì  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+						<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" >:    «·≈Œ’«∆Ì «·≈Ã „«⁄Ì &nbsp;&nbsp;</label></td>
+					</tr>
+					<tr>
+						<td class="text-right "  ><span ></span> <label class="gry-color strong selectBoxLabel bold block" style="float:right"> : «· ÊﬁÌ⁄    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+						<td class="text-right " ><span ></span> <label class="gry-color strong" style="float:right" >: «· ÊﬁÌ⁄&nbsp;&nbsp;</label></td>
+					</tr>
+				</table>
+
+
+    <img src="{{ URL::to('images/3.jpg') }}" style="width:800px;height:30px;">
+
+
+</div>
+</div>
+<script>
+    // window.print();
+</script>
+</body>
+</html>

@@ -84,13 +84,7 @@ class StoreClientRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'fees.*' => [
-                'integer',
-            ],
-            'fees' => [
-                'required',
-                'array',
-            ],
+    
         ];
     }
 }

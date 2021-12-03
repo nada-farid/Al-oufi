@@ -7,12 +7,14 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyClientRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\ClientFee;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Alert;
 
 class ClientsController extends Controller
 {
@@ -63,7 +65,7 @@ class ClientsController extends Controller
     {
         abort_if(Gate::denies('client_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fees = ClientFee::pluck('type', 'id');
+        $fees = ClientFee::all();
 
         return view('admin.clients.create', compact('fees'));
     }
@@ -71,27 +73,63 @@ class ClientsController extends Controller
     public function store(StoreClientRequest $request)
     {
         $client = Client::create($request->all());
-        $client->fees()->sync($request->input('fees', []));
+    
+         for($i=1;$i<5;$i++){
+            DB::table('client_client_fee')->insert([  
+                'client_id'=>$client->id,
+                'client_fee_id'=>$i,
+                'clearance_fee' => $request->fees[$i][0],
+                'transportaion' => $request->fees[$i][1],
+                'loading_fee' => $request->fees[$i][2],
 
-        return redirect()->route('admin.clients.index');
+        ]); 
     }
+
+        //return redirect()->route('admin.clients.index');
+        if ($client)
+        return response()->json([
+            'status' => true,
+            'msg' => 'تم الحفظ بنجاح',
+            'value'=>$client->id,
+        ]);
+
+    else
+        return response()->json([
+            'status' => false,
+            'msg' => 'فشل الحفظ برجاء المحاوله مجددا',
+        ]);
+}
+
 
     public function edit(Client $client)
     {
         abort_if(Gate::denies('client_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fees = ClientFee::pluck('type', 'id');
-
-        $client->load('fees');
-
-        return view('admin.clients.edit', compact('fees', 'client'));
+       $client_fees =  DB::table('client_client_fee')->where('client_id','=',$client->id)->get();
+      
+       
+       return view('admin.clients.edit', compact( 'client','client_fees'));
     }
 
     public function update(UpdateClientRequest $request, Client $client)
     {
+       
         $client->update($request->all());
-        $client->fees()->sync($request->input('fees', []));
-
+      
+        $deleting=DB::table('client_client_fee')->where('client_id','=',$client->id)->delete();
+         if($deleting){
+            for($i=1;$i<5;$i++){
+                DB::table('client_client_fee')->insert([  
+                    'client_id'=>$client->id,
+                    'client_fee_id'=>$i,
+                    'clearance_fee' => $request->fees[$i][0],
+                    'transportaion' => $request->fees[$i][1],
+                    'loading_fee' => $request->fees[$i][2],
+    
+            ]); 
+    }
+    }
+    Alert::success('Success', 'client info updated sucessfully');
         return redirect()->route('admin.clients.index');
     }
 

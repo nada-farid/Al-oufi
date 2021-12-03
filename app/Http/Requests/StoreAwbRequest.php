@@ -19,9 +19,7 @@ class StoreAwbRequest extends FormRequest
         return [
             'awb_no' => [
                 'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'string',
             ],
             'no_of_pcs' => [
                 'required',

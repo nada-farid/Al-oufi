@@ -67,7 +67,8 @@ class Client extends Model
 
     public function fees()
     {
-        return $this->belongsToMany(ClientFee::class);
+        return $this->belongsToMany(ClientFee::class)->withPivot('clearance_fee','transportaion','loading_fee');
+    
     }
 
     protected function serializeDate(DateTimeInterface $date)

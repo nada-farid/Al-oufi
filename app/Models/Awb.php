@@ -46,6 +46,7 @@ class Awb extends Model implements HasMedia
         'receipt_no',
         'receipt_date',
         'remarks',
+         'notification_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -105,5 +106,9 @@ class Awb extends Model implements HasMedia
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class, 'notification_id');
     }
 }

@@ -9,9 +9,15 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.awbs.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+            <div class="card">
+                <div class="card-header">
+                    <strong style="color: #00008B;"> AWB Information</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
                 <label class="required" for="awb_no">{{ trans('cruds.awb.fields.awb_no') }}</label>
-                <input class="form-control {{ $errors->has('awb_no') ? 'is-invalid' : '' }}" type="number" name="awb_no" id="awb_no" value="{{ old('awb_no', '') }}" step="1" required>
+                <input class="form-control {{ $errors->has('awb_no') ? 'is-invalid' : '' }}" type="text" name="awb_no" id="awb_no" value="{{ old('awb_no', '') }}" step="1" required  onfocusout="myFunction()" >
                 @if($errors->has('awb_no'))
                     <div class="invalid-feedback">
                         {{ $errors->first('awb_no') }}
@@ -19,7 +25,20 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.awb_no_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
+                <label  for="client_name">{{ trans('cruds.awb.fields.client_name') }}</label>
+                <input class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}" type="text" name="client_name" id="client_name" disabled   value="" />
+              </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <strong style="color: #00008B;"> Goods details</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+            <div class="form-group col-md-3">
                 <label class="required" for="no_of_pcs">{{ trans('cruds.awb.fields.no_of_pcs') }}</label>
                 <input class="form-control {{ $errors->has('no_of_pcs') ? 'is-invalid' : '' }}" type="number" name="no_of_pcs" id="no_of_pcs" value="{{ old('no_of_pcs', '') }}" step="1" required>
                 @if($errors->has('no_of_pcs'))
@@ -29,7 +48,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.no_of_pcs_helper') }}</span>
             </div>
-            <div class="form-group">
+                    <div class="form-group col-md-6">
                 <label class="required" for="goods_type">{{ trans('cruds.awb.fields.goods_type') }}</label>
                 <input class="form-control {{ $errors->has('goods_type') ? 'is-invalid' : '' }}" type="text" name="goods_type" id="goods_type" value="{{ old('goods_type', '') }}" required>
                 @if($errors->has('goods_type'))
@@ -39,7 +58,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.goods_type_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label class="required" for="decleration_no">{{ trans('cruds.awb.fields.decleration_no') }}</label>
                 <input class="form-control {{ $errors->has('decleration_no') ? 'is-invalid' : '' }}" type="number" name="decleration_no" id="decleration_no" value="{{ old('decleration_no', '') }}" step="1" required>
                 @if($errors->has('decleration_no'))
@@ -49,7 +68,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.decleration_no_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label class="required" for="goods_weight">{{ trans('cruds.awb.fields.goods_weight') }}</label>
                 <input class="form-control {{ $errors->has('goods_weight') ? 'is-invalid' : '' }}" type="number" name="goods_weight" id="goods_weight" value="{{ old('goods_weight', '') }}" step="0.01" required>
                 @if($errors->has('goods_weight'))
@@ -59,17 +78,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.goods_weight_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="declaration_date">{{ trans('cruds.awb.fields.declaration_date') }}</label>
-                <input class="form-control date {{ $errors->has('declaration_date') ? 'is-invalid' : '' }}" type="text" name="declaration_date" id="declaration_date" value="{{ old('declaration_date') }}" required>
-                @if($errors->has('declaration_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('declaration_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.awb.fields.declaration_date_helper') }}</span>
-            </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="declaration_file">{{ trans('cruds.awb.fields.declaration_file') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('declaration_file') ? 'is-invalid' : '' }}" id="declaration_file-dropzone">
                 </div>
@@ -79,8 +88,27 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.declaration_file_helper') }}</span>
+                </div>
+            <div class="form-group col-md-3">
+                <label class="required" for="declaration_date">{{ trans('cruds.awb.fields.declaration_date') }}</label>
+                <input class="form-control date {{ $errors->has('declaration_date') ? 'is-invalid' : '' }}" type="text" name="declaration_date" id="declaration_date" value="{{ old('declaration_date') }}" required>
+                @if($errors->has('declaration_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('declaration_date') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.awb.fields.declaration_date_helper') }}</span>
             </div>
-            <div class="form-group">
+                    </div>
+                </div>
+            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <strong style="color: #00008B;"> Delivery details</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+            <div class="form-group col-md-4">
                 <label class="required" for="delivery_no">{{ trans('cruds.awb.fields.delivery_no') }}</label>
                 <input class="form-control {{ $errors->has('delivery_no') ? 'is-invalid' : '' }}" type="number" name="delivery_no" id="delivery_no" value="{{ old('delivery_no', '') }}" step="1" required>
                 @if($errors->has('delivery_no'))
@@ -90,7 +118,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.delivery_no_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="required" for="delivery_date">{{ trans('cruds.awb.fields.delivery_date') }}</label>
                 <input class="form-control date {{ $errors->has('delivery_date') ? 'is-invalid' : '' }}" type="text" name="delivery_date" id="delivery_date" value="{{ old('delivery_date') }}" required>
                 @if($errors->has('delivery_date'))
@@ -100,7 +128,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.delivery_date_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="required" for="delivery_amount">{{ trans('cruds.awb.fields.delivery_amount') }}</label>
                 <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="number" name="delivery_amount" id="delivery_amount" value="{{ old('delivery_amount', '') }}" step="1" required>
                 @if($errors->has('delivery_amount'))
@@ -110,7 +138,16 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.delivery_amount_helper') }}</span>
             </div>
-            <div class="form-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <strong style="color: #00008B;"> Recive details</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+            <div class="form-group col-md-6">
                 <label for="goods_date">{{ trans('cruds.awb.fields.goods_date') }}</label>
                 <input class="form-control date {{ $errors->has('goods_date') ? 'is-invalid' : '' }}" type="text" name="goods_date" id="goods_date" value="{{ old('goods_date') }}">
                 @if($errors->has('goods_date'))
@@ -120,7 +157,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.goods_date_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label class="required" for="customer_fees">{{ trans('cruds.awb.fields.customer_fees') }}</label>
                 <input class="form-control {{ $errors->has('customer_fees') ? 'is-invalid' : '' }}" type="number" name="customer_fees" id="customer_fees" value="{{ old('customer_fees', '') }}" step="1" required>
                 @if($errors->has('customer_fees'))
@@ -130,7 +167,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.customer_fees_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="receipt_no">{{ trans('cruds.awb.fields.receipt_no') }}</label>
                 <input class="form-control {{ $errors->has('receipt_no') ? 'is-invalid' : '' }}" type="number" name="receipt_no" id="receipt_no" value="{{ old('receipt_no', '') }}" step="1">
                 @if($errors->has('receipt_no'))
@@ -140,7 +177,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.receipt_no_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="receipt_date">{{ trans('cruds.awb.fields.receipt_date') }}</label>
                 <input class="form-control date {{ $errors->has('receipt_date') ? 'is-invalid' : '' }}" type="text" name="receipt_date" id="receipt_date" value="{{ old('receipt_date') }}">
                 @if($errors->has('receipt_date'))
@@ -150,9 +187,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.receipt_date_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-12">
                 <label for="remarks">{{ trans('cruds.awb.fields.remarks') }}</label>
-                <textarea class="form-control {{ $errors->has('remarks') ? 'is-invalid' : '' }}" name="remarks" id="remarks">{{ old('remarks') }}</textarea>
+                <input class="form-control {{ $errors->has('remarks') ? 'is-invalid' : '' }}" name="remarks" id="remarks">
                 @if($errors->has('remarks'))
                     <div class="invalid-feedback">
                         {{ $errors->first('remarks') }}
@@ -160,6 +197,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.remarks_helper') }}</span>
             </div>
+                            </div>
+                        </div>
+                    </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -224,4 +264,25 @@
      }
 }
 </script>
-@endsection
+    <script>
+    function myFunction() {
+        var num = document.getElementById("awb_no").value;
+        $.ajax({
+                type: 'get',
+                url: "{{ route('admin.awb.check') }}",
+                data:{
+                    'num':num,
+                },
+                success: function (data) {
+                    if (data.status == true) {
+                        document.getElementById("client_name").value = data.value;
+                    }
+                    else
+                    alert('oops .. You must add this AWB in notification screen first')
+                },
+            });
+    }
+    </script>
+        @endsection
+        
+   

@@ -33,14 +33,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.invoice.fields.goods_release') }}
-                        </th>
-                        <td>
-                            {{ $invoice->goods_release }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.invoice.fields.invoice_date') }}
                         </th>
                         <td>
