@@ -97,6 +97,7 @@
                 </a>
             </li>
         @endcan
+        <!--
         @can('client_fee_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.client-fees.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/client-fees") || request()->is("admin/client-fees/*") ? "c-active" : "" }}">
@@ -107,6 +108,17 @@
                 </a>
             </li>
         @endcan
+        -->
+        @can('invoice_access')
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.invoices.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/invoices") || request()->is("admin/invoices/*") ? "c-active" : "" }}">
+                <i class="fa-fw fas fa-file-invoice-dollar c-sidebar-nav-icon">
+
+                </i>
+                {{ trans('cruds.invoice.title') }}
+            </a>
+        </li>
+    @endcan
         @can('user_alert_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
@@ -117,16 +129,7 @@
                 </a>
             </li>
         @endcan
-        @can('invoice_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.invoices.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/invoices") || request()->is("admin/invoices/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-file-invoice-dollar c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.invoice.title') }}
-                </a>
-            </li>
-        @endcan
+<!--
         <li class="c-sidebar-nav-item">
             <a href="{{ route("admin.systemCalendar") }}" class="c-sidebar-nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
@@ -135,6 +138,7 @@
                 {{ trans('global.systemCalendar') }}
             </a>
         </li>
+    -->
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

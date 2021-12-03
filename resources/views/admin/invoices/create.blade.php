@@ -272,9 +272,6 @@ function myFunction() {
                     document.getElementById("delivery_amount").value = data.value.delivery_amount;
                     document.getElementById("amount").value =data.amount;
                     document.getElementById("total").value =data.amount+22.5;
-                
-
-
                 }
                 else
                 alert('oops .. Enter Vaild Awb number')

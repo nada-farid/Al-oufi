@@ -80,6 +80,8 @@ class AwbController extends Controller
     {
         abort_if(Gate::denies('awb_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $awb->load('notification');
+        
         return view('admin.awbs.edit', compact('awb'));
     }
 
@@ -97,7 +99,8 @@ class AwbController extends Controller
         } elseif ($awb->declaration_file) {
             $awb->declaration_file->delete();
         }
-
+        
+        Alert::success('Success', 'Awb updated sucessfully');
         return redirect()->route('admin.awbs.index');
     }
 

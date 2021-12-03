@@ -5,7 +5,6 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.client.title') }}
     </div>
-
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
@@ -13,6 +12,8 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
+            <div class="row">
+                <div class="col-md-4">
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -167,16 +168,6 @@
                             {{ $client->to }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.client.fields.fees') }}
-                        </th>
-                        <td>
-                            @foreach($client->fees as $key => $fees)
-                                <span class="label label-info">{{ $fees->type }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -184,10 +175,39 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
+</div>
+<div class="col-md-8">   
+<div class="card">
+    <div class="card-header">
+        <strong style="color: #00008B;"> Client Fees</strong>
+    </div>
+    <div class="card-body">
+<table>
+    <tr>
+        <th>
+        </th>
+        <th>
+            Clearance Fee
+        </th>
+        <th>
+            Transportaion Fee
+        </th>
+        <th>
+            Loading Fee
+        </th>
+    </tr>
+    @foreach($client_fees as  $ClientFee)
+        <tr>      
+            <td>{{App\Models\ClientFee::findOrfail($ClientFee->client_fee_id)->type}}</td>
+          
+            <td><input value="{{$ClientFee->clearance_fee ?? null }}"  data-id="{{ $ClientFee->client_fee_id }}" disabled></td> 
+            <td><input value="{{ $ClientFee->transportaion ?? null }}"  data-id="{{ $ClientFee->client_fee_id }}" disabled></td>       
+            <td><input value="{{$ClientFee->loading_fee ?? null }}"  data-id="{{ $ClientFee->client_fee_id }}" disabled></td>             
+        </tr>
+    @endforeach
+</table>
     </div>
 </div>
-
-
-
+</div>
+    </div>
 @endsection

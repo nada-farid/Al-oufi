@@ -137,9 +137,9 @@ class ClientsController extends Controller
     {
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $client->load('fees');
+        $client_fees =  DB::table('client_client_fee')->where('client_id','=',$client->id)->get();
 
-        return view('admin.clients.show', compact('client'));
+        return view('admin.clients.show', compact('client','client_fees'));
     }
 
     public function destroy(Client $client)
