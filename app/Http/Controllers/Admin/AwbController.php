@@ -81,7 +81,7 @@ class AwbController extends Controller
         abort_if(Gate::denies('awb_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $awb->load('notification');
-        
+
         return view('admin.awbs.edit', compact('awb'));
     }
 
@@ -174,13 +174,16 @@ class AwbController extends Controller
         $fees=DB::table('client_client_fee')->where('client_id','=',$awb->notification->client->id)->where('client_fee_id',$GLOBALS['id'])->first();
 
         $amount=$fees->clearance_fee+$fees->transportaion+$fees->loading_fee+$awb->customer_fees+$awb->delivery_amount;
-
+        $vat=(($amount)*15)/100;
+        $total=$amount+$vat;
         if($awb)
         return response()->json([
             'status' => true,
             'fees'=>$fees,
             'value'=>$awb,
             'amount'=>$amount,
+            'vat'=>$vat,
+            'total'=>$total,
         ]);
 
     else

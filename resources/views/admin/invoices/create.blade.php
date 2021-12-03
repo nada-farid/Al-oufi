@@ -210,7 +210,7 @@ id-feedback">
                     <input value="" type="number" id="amount" name="amount" required>  
                     </div>
         <div class="form-group col-md-4"> 
-            <label>VAT</label>              
+            <label>VAT(15%)</label>              
             <input value="22.5" type="vat" id="vat" name="vat" required >  
                       </div>
           <div class="form-group col-md-4"> 
@@ -271,7 +271,8 @@ function myFunction() {
                     document.getElementById("customer_fees").value = data.value.customer_fees;
                     document.getElementById("delivery_amount").value = data.value.delivery_amount;
                     document.getElementById("amount").value =data.amount;
-                    document.getElementById("total").value =data.amount+22.5;
+                    document.getElementById("vat").value =data.vat;
+                    document.getElementById("total").value =data.total;
                 }
                 else
                 alert('oops .. Enter Vaild Awb number')
