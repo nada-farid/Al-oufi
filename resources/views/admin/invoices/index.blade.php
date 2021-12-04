@@ -101,7 +101,9 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.invoices.print', $invoice->id) }}">
+                                    {{ trans('global.print') }}
+                                </a>
                             </td>
 
                         </tr>

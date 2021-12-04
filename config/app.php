@@ -162,7 +162,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+       // SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        LaravelQRCode\Providers\QRCodeServiceProvider::class,   
+
 
         /*
          * Package Service Providers...
@@ -230,7 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        //'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'QRCode' => Laravel\Facades\QRCode::class, 
 
     ],
 

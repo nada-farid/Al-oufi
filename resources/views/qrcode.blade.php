@@ -212,8 +212,14 @@ background-color: #f7f7ff;
             <div id="invoice">
                 <div class="toolbar hidden-print">
                     <div class="text-end">
-                        {!! QrCode::size(100)->backgroundColor(255,90,0)->generate('Clien Name :' .'  '.$invoice->client->client_name. '------ '.'Client No= '.$invoice->client->id .'-----  '.'vat (15%)= '.$invoice->vat .' -----'.'Cost before tax= '.$invoice->amount .'------'.'Cost after tax= '.$invoice->total ) !!}
-                    </div>
+                             @php
+                             $client_name=trans('cruds.parcode.client_name').'is:' .$invoice->client->client_name;
+                        $tax_number=trans('cruds.parcode.tax_number').'is:' .$invoice->client->tax_number;
+                        $invoice_number=trans('cruds.parcode.invoice_number').'is:' .$invoice->id;
+                        $amount=trans('cruds.parcode.invoice_number').'is:' .$invoice->amount;
+                        $vat=trans('cruds.parcode.Vat').'(15%)is:' .$invoice->vat;    
+                             @endphp
+                          {!! QrCode::size(100)->backgroundColor(255,90,0)->generate(URL::Route('qr_details', ['id' => $invoice->id]))!!}
                     <hr>
                 </div>
                 <div class="invoice overflow-auto">
@@ -379,13 +385,12 @@ background-color: #f7f7ff;
             <div class="card-header">
             </div>
             <div class="card-body">
-    
-                {!! QrCode::size(300)->backgroundColor(255,90,0)->generate('Clien Name :' .'  '.$invoice->client->client_name. '------ '.'Client No= '.$invoice->client->id .'-----  '.'vat (15%)= '.$invoice->vat .' '.'Cost before tax= '.$invoice->amount .'------'.'Cost after tax= '.$invoice->total ) !!}
           
             </div>
         </div>
     
 
     </div> -->
+    
 </body>
 </html>

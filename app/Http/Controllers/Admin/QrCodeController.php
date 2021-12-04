@@ -10,9 +10,10 @@ use App\Models\Invoice;
 
 class QrCodeController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-      $invoice = Invoice::where('id',1)->with('client','awb')->first();
+      
+      $invoice = Invoice::where('id',$id)->with('client','awb')->first();
     
       $weight=$invoice->awb->goods_weight;
      
@@ -30,5 +31,14 @@ class QrCodeController extends Controller
        $fees=DB::table('client_client_fee')->where('client_id','=',$invoice->client->id)->where('client_fee_id',$GLOBALS['id'])->first();
   
        return view('qrcode',compact('invoice','fees'));
+    }
+    public function details($id){
+
+      $invoice = Invoice::where('id',$id)->with('client','awb')->first();
+
+      return view('admin.invoices.QR',compact('invoice'));
+
+
+      
     }
 }

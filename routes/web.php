@@ -13,9 +13,11 @@ Auth::routes(['register' => false]);
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-    Route::get('/', 'HomeController@index')->name('home');
-    
-Route::get('/generate-qrcode','QrCodeController@index');
+   
+    //invoices
+Route::get('invoice/printing/{id}','QrCodeController@index')->name('invoices.print');
+Route::get('','QrCodeController@index')->name('invoices.print');
+Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -80,3 +82,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
     }
 });
+
+
+

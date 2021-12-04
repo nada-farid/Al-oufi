@@ -280,4 +280,13 @@ return [
             'deleted_at_helper'    => ' ',
         ],
     ],
+    'parcode'=>[
+          'client_name'=>'Client Name',
+          'tax_number'=>'Tax Number',
+          'invoice_number'=>'Invoice Number',
+          'amount'=>'Tax Number',
+          'vat'=>'V.A.T ',
+          'total'=>'Total',
+
+    ],
 ];
