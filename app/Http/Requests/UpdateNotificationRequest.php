@@ -20,6 +20,7 @@ class UpdateNotificationRequest extends FormRequest
             'awb_no' => [
                 'string',
                 'required',
+                'unique:notifications,awb_no,' .$this->notification->id,
             ],
             'client_id' => [
                 'required',

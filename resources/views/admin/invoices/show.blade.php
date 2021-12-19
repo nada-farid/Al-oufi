@@ -44,7 +44,7 @@
                             {{ trans('cruds.invoice.fields.client') }}
                         </th>
                         <td>
-                            {{ $invoice->client->client_name ?? '' }}
+                            {{ $invoice->client_id ?? '' }}
                         </td>
                     </tr>
                     <tr>

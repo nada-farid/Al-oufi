@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use \DateTimeInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,7 @@ class Notification extends Model implements HasMedia
         'awb_date',
         'remarks',
         'appearance',
+         'status',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -65,9 +67,9 @@ class Notification extends Model implements HasMedia
         $this->attributes['awb_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function getAwbFileAttribute()
+  public function getAwbFileAttribute()
     {
-        return $this->getMedia('awb_file')->last();
+        return $this->getMedia('awb_file');
     }
 
     protected function serializeDate(DateTimeInterface $date)

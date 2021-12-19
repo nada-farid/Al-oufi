@@ -33,18 +33,32 @@ class StoreInvoiceRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'amount' => [
-                'required',
-            ],
-            'vat' => [
-                'required',
-            ],
-            'total' => [
-                'required',
-            ],
+            
+            
             'remarks' => [
                 'required',
             ],
+            'air'=>[
+               'nullable',
+                ],
+                  'legalization'=>[
+               'nullable',
+                ],
+                  'formalities'=>[
+               'nullable',
+                ],
+                  'demuerrage'=>[
+               'nullable',
+                ],
+                  'scan'=>[
+               'nullable',
+                ],
+                  'undertaking'=>[
+               'nullable',
+                ],
+                  'other'=>[
+               'nullable',
+                ],
         ];
     }
 }

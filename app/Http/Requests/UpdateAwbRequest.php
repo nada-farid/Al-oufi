@@ -17,10 +17,7 @@ class UpdateAwbRequest extends FormRequest
     public function rules()
     {
         return [
-            'awb_no' => [
-                'required',
-                'string',
-            ],
+            'awb_no' =>  "required|unique:awbs,awb_no,{$this->awb->id},id,deleted_at,NULL",
             'no_of_pcs' => [
                 'required',
                 'integer',
@@ -46,30 +43,26 @@ class UpdateAwbRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
             ],
             'delivery_no' => [
-                'required',
+                 'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
             'delivery_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
+        
+                'nullable',
             ],
             'delivery_amount' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'nullable',
+                
             ],
             'goods_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'customer_fees' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+            
+                'nullable',      
             ],
             'receipt_no' => [
                 'nullable',
@@ -81,6 +74,9 @@ class UpdateAwbRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'serial_number'=>[
+                'required',
+                ],
         ];
     }
 }

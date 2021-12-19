@@ -15,9 +15,16 @@
 @endcan
 <div class="card">
     <div class="card-header">
+        <div class="row">
+            
+       <div class="col-md-4">
         {{ trans('cruds.client.title_singular') }} {{ trans('global.list') }}
     </div>
-
+      <div class="col-md-4">
+          <h4 style="color:red;">Number Of Clients: {{$client_number}}</h4>
+          </div>
+    </div>
+   </div>
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Client">
             <thead>
@@ -26,7 +33,7 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.client.fields.id') }}
+                        {{ trans('cruds.client.fields.client_no') }}
                     </th>
                     <th>
                         {{ trans('cruds.client.fields.client_name') }}
@@ -87,7 +94,7 @@
     ajax: "{{ route('admin.clients.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+{ data: 'client_no', name: 'client_no' },
 { data: 'client_name', name: 'client_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

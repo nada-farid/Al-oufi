@@ -23,23 +23,22 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.awb.fields.id') }}
+                            {{ trans('cruds.awb.fields.serial_number') }}
                         </th>
                         <th>
                             {{ trans('cruds.awb.fields.awb_no') }}
                         </th>
+                      
                         <th>
-                            {{ trans('cruds.awb.fields.no_of_pcs') }}
+                            {{ trans('cruds.awb.fields.client_name') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.awb.fields.goods_type') }}
+                          <th>
+                            {{ trans('cruds.awb.fields.no_of_pcs') }}
                         </th>
                         <th>
                             {{ trans('cruds.awb.fields.goods_weight') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.awb.fields.delivery_no') }}
-                        </th>
+                       
                         <th>
                             {{ trans('cruds.awb.fields.delivery_date') }}
                         </th>
@@ -58,23 +57,25 @@
 
                             </td>
                             <td>
-                                {{ $awb->id ?? '' }}
+                                  <a  href="{{ route('admin.awbs.show', $awb->id) }}">
+                                 
+                                {{ $awb->serial_number ?? '' }}
+                                   </a>
                             </td>
                             <td>
                                 {{ $awb->awb_no ?? '' }}
                             </td>
+                              <td>
+                                {{ $awb->notification->client->client_name ?? '' }}
+                            </td>
                             <td>
                                 {{ $awb->no_of_pcs ?? '' }}
                             </td>
-                            <td>
-                                {{ $awb->goods_type ?? '' }}
-                            </td>
+                          
                             <td>
                                 {{ $awb->goods_weight ?? '' }}
                             </td>
-                            <td>
-                                {{ $awb->delivery_no ?? '' }}
-                            </td>
+                          
                             <td>
                                 {{ $awb->delivery_date ?? '' }}
                             </td>
@@ -82,11 +83,11 @@
                                 {{ $awb->delivery_amount ?? '' }}
                             </td>
                             <td>
-                                @can('awb_show')
+                                <!--@can('awb_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.awbs.show', $awb->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
+                                @endcan-->
 
                                 @can('awb_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.awbs.edit', $awb->id) }}">

@@ -29,6 +29,10 @@
                 <label  for="client_name">{{ trans('cruds.awb.fields.client_name') }}</label>
                 <input class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}" type="text" name="client_name" id="client_name" disabled   value="" />
               </div>
+                    <div class="form-group col-md-3">
+                <label  class="required" for="serial_number">{{ trans('cruds.awb.fields.serial_number') }}</label>
+                <input class="form-control {{ $errors->has('serial_number') ? 'is-invalid' : '' }}" type="text" name="serial_number" id="serial_number"   value="" required/>
+              </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +64,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="required" for="decleration_no">{{ trans('cruds.awb.fields.decleration_no') }}</label>
-                <input class="form-control {{ $errors->has('decleration_no') ? 'is-invalid' : '' }}" type="number" name="decleration_no" id="decleration_no" value="{{ old('decleration_no', '') }}" step="1" required>
+                <input class="form-control {{ $errors->has('decleration_no') ? 'is-invalid' : '' }}" type="number" name="decleration_no" id="decleration_no" value="{{ old('decleration_no', '') }}" step="1"required >
                 @if($errors->has('decleration_no'))
                     <div class="invalid-feedback">
                         {{ $errors->first('decleration_no') }}
@@ -88,7 +92,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.declaration_file_helper') }}</span>
-                </div>
+            </div>
             <div class="form-group col-md-3">
                 <label class="required" for="declaration_date">{{ trans('cruds.awb.fields.declaration_date') }}</label>
                 <input class="form-control date {{ $errors->has('declaration_date') ? 'is-invalid' : '' }}" type="text" name="declaration_date" id="declaration_date" value="{{ old('declaration_date') }}" required>
@@ -109,8 +113,8 @@
                         <div class="card-body">
                             <div class="row">
             <div class="form-group col-md-4">
-                <label class="required" for="delivery_no">{{ trans('cruds.awb.fields.delivery_no') }}</label>
-                <input class="form-control {{ $errors->has('delivery_no') ? 'is-invalid' : '' }}" type="number" name="delivery_no" id="delivery_no" value="{{ old('delivery_no', '') }}" step="1" required>
+                <label class="" for="delivery_no">{{ trans('cruds.awb.fields.delivery_no') }}</label>
+                <input class="form-control {{ $errors->has('delivery_no') ? 'is-invalid' : '' }}" type="number" name="delivery_no" id="delivery_no" value="{{ old('delivery_no', '') }}" step="1" >
                 @if($errors->has('delivery_no'))
                     <div class="invalid-feedback">
                         {{ $errors->first('delivery_no') }}
@@ -119,8 +123,8 @@
                 <span class="help-block">{{ trans('cruds.awb.fields.delivery_no_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label class="required" for="delivery_date">{{ trans('cruds.awb.fields.delivery_date') }}</label>
-                <input class="form-control date {{ $errors->has('delivery_date') ? 'is-invalid' : '' }}" type="text" name="delivery_date" id="delivery_date" value="{{ old('delivery_date') }}" required>
+                <label for="delivery_date">{{ trans('cruds.awb.fields.delivery_date') }}</label>
+                <input class="form-control date {{ $errors->has('delivery_date') ? 'is-invalid' : '' }}" type="text" name="delivery_date" id="delivery_date" value="{{ old('delivery_date') }}" >
                 @if($errors->has('delivery_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('delivery_date') }}
@@ -129,8 +133,8 @@
                 <span class="help-block">{{ trans('cruds.awb.fields.delivery_date_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label class="required" for="delivery_amount">{{ trans('cruds.awb.fields.delivery_amount') }}</label>
-                <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="number" name="delivery_amount" id="delivery_amount" value="{{ old('delivery_amount', '') }}" step="1" required>
+                <label  for="delivery_amount">{{ trans('cruds.awb.fields.delivery_amount') }}</label>
+                <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}"name="delivery_amount" id="delivery_amount" value="{{ old('delivery_amount', '') }}" step="1" >
                 @if($errors->has('delivery_amount'))
                     <div class="invalid-feedback">
                         {{ $errors->first('delivery_amount') }}
@@ -158,8 +162,8 @@
                 <span class="help-block">{{ trans('cruds.awb.fields.goods_date_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label class="required" for="customer_fees">{{ trans('cruds.awb.fields.customer_fees') }}</label>
-                <input class="form-control {{ $errors->has('customer_fees') ? 'is-invalid' : '' }}" type="number" name="customer_fees" id="customer_fees" value="{{ old('customer_fees', '') }}" step="1" required>
+                <label  for="customer_fees">{{ trans('cruds.awb.fields.customer_fees') }}</label>
+                <input class="form-control {{ $errors->has('customer_fees') ? 'is-invalid' : '' }}"  name="customer_fees" id="customer_fees" value="{{ old('customer_fees', '') }}" step="1" >
                 @if($errors->has('customer_fees'))
                     <div class="invalid-feedback">
                         {{ $errors->first('customer_fees') }}
@@ -179,7 +183,11 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="receipt_date">{{ trans('cruds.awb.fields.receipt_date') }}</label>
-                <input class="form-control date {{ $errors->has('receipt_date') ? 'is-invalid' : '' }}" type="text" name="receipt_date" id="receipt_date" value="{{ old('receipt_date') }}">
+                @php
+    
+use Carbon\Carbon;
+@endphp
+                <input class="form-control date {{ $errors->has('receipt_date') ? 'is-invalid' : '' }}" type="text" name="receipt_date" id="receipt_date" value="{{Carbon::now()->format('d-m-Y') }}">
                 @if($errors->has('receipt_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('receipt_date') }}
@@ -200,11 +208,19 @@
                             </div>
                         </div>
                     </div>
-            <div class="form-group">
+                    <div class="row">
+            <div class="form-group col-md-6">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+                </div>
+                <div col-md-6>
+                   <a class="btn btn-default" href="{{ route('admin.awbs.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+                </div>
             </div>
+          
         </form>
     </div>
 </div>
@@ -283,6 +299,61 @@
             });
     }
     </script>
-        @endsection
-        
-   
+
+<script>
+    var uploadedDeclarationFileMap = {}
+Dropzone.options.declarationFileDropzone = {
+    url: '{{ route('admin.awbs.storeMedia') }}',
+    maxFilesize: 100, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 100
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="declaration_file[]" value="' + response.name + '">')
+      uploadedDeclarationFileMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedDeclarationFileMap[file.name]
+      }
+      $('form').find('input[name="declaration_file[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($awb) && $awb->declaration_file)
+          var files =
+            {!! json_encode($awb->declaration_file) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="declaration_file[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+@endsection

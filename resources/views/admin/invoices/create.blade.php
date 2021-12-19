@@ -12,10 +12,14 @@ use Carbon\Carbon;
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.invoices.store") }}" enctype="multipart/form-data">
+        <form id="invoiceForm" action="" enctype="multipart/form-data">
             @csrf
             <input id="client_id" name="client_id" type="hidden">
             <input id="awb_id" name="awb_id" type="hidden">
+            <div class="form-group col-md-3">
+                <label for="serial_no"> <strong style="color: #00008B;">Invoice Serial No:</strong></label>
+                <input class="form-control {{ $errors->has('serial_no') ? 'is-invalid' : '' }}" type="text" name="serial_no" id="serial_no" value="{{ old('serial_no', '') }}" step="1"    >
+            </div>
             <div class="card">
                 <div class="card-header">
                     <strong style="color: #00008B;"></strong>
@@ -183,45 +187,88 @@ id-feedback">
               <div class="row">
              <div class="form-group col-md-4">           
             <label>Clearance</label>
-            <input class="form-control {{ $errors->has('clearance_fee') ? 'is-invalid' : '' }}" type="text" name="clearance_fee" id="clearance_fee" disabled   value="" />
+            <input class="form-control {{ $errors->has('clearance_fee') ? 'is-invalid' : '' }}" type="text" name="clearance_fee" id="clearance_fee"    value="" />
                     </div>
                     <div class="form-group col-md-4">           
                         <label>loading fee</label>
-                        <input class="form-control {{ $errors->has('loading_fee') ? 'is-invalid' : '' }}" type="text" name="loading_fee" id="loading_fee" disabled   value="" />
+                        <input class="form-control {{ $errors->has('loading_fee') ? 'is-invalid' : '' }}" type="text" name="loading_fee" id="loading_fee"    value="" />
                                 </div>
                                 <div class="form-group col-md-4">           
                                     <label>transportaion fee</label>
-                                    <input class="form-control {{ $errors->has('transportaion') ? 'is-invalid' : '' }}" type="text" name="transportaion" id="transportaion" disabled   value="" />
+                                    <input class="form-control {{ $errors->has('transportaion') ? 'is-invalid' : '' }}" type="text" name="transportaion" id="transportaion"    value="" />
                                             </div>       
                                             <div class="form-group col-md-4">           
                                                 <label>custom fee</label>
-                                                <input class="form-control {{ $errors->has('customer_fees') ? 'is-invalid' : '' }}" type="text" name="customer_fees" id="customer_fees" disabled   value="" />
+                                                <input class="form-control {{ $errors->has('customer_fees') ? 'is-invalid' : '' }}" type="text" name="customer_fees" id="customer_fees"    value="" />
                                                         </div>    
                                                         <div class="form-group col-md-4">           
                                                             <label>delivery order</label>
-                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="delivery_amount" id="delivery_amount" disabled   value="" />
-                                                                    </div>    
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="delivery_amount" id="delivery_amount"    value="" />
+                                                            </div>
+                                                 <!---  -->
+                                                 
+                                                  <div class="form-group col-md-4">  
+                                                 
+                                                                          <label>Translation\Scan</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="scan" id="delivery_amount"    value="0" />
+                                                            </div>
+                                                            
+                                                 <div class="form-group col-md-4">              
+                                                                        
+                                                                          <label>Air\See</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="air" id="delivery_amount"    value="0" />
+                                                                             </div>
+                                                            
+                                                 <div class="form-group col-md-4">  
+                                                                        
+                                                                          <label>Exp\Imp formalities</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="formalities" id="delivery_amount"    value="0" /> 
+                                                                             </div>
+                                                            
+                                                 <div class="form-group col-md-4">  
+                                                                          <label>Demuerrage</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="demuerrage" id="delivery_amount"    value="0" />  
+                                                                             </div>
+                                                            
+                                                 <div class="form-group col-md-4">  
+                                                                          <label>Legalization</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="legalization" id="delivery_amount"    value="0" />  
+                                                                             </div>
+                                                            
+                                                 <div class="form-group col-md-4">  
+                                                                 <label>undertaking</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="undertaking" id="delivery_amount"    value="0" /> 
+                                                                             </div>
+                                                            
+                                                 <div class="form-group col-md-4">  
+                                                                          <label>Other Expenses</label>
+                                                            <input class="form-control {{ $errors->has('delivery_amount') ? 'is-invalid' : '' }}" type="text" name="other" id="delivery_amount"    value="0" />
+                                                            <!-- -->
+                                                            
+                                              
+                                                 </div>
+                                                                       
                     </div>
                     </div>
                 </div> 
                 <div class="col">
             <div class="form-group col-md-4"> 
           <label>Amount</label>              
-                    <input value="" type="number" id="amount" name="amount" required>  
+                    <input value="" type="number" id="amount" name="amount" disabled>  
                     </div>
         <div class="form-group col-md-4"> 
             <label>VAT(15%)</label>              
-            <input value="22.5" type="vat" id="vat" name="vat" required >  
+            <input value="0" type="vat" id="vat" name="vat" disabled >  
                       </div>
           <div class="form-group col-md-4"> 
             <label>Total</label>             
-            <input value="" type="number" id="total" name="total" step="0.01" required>   
+            <input value="" type="number" id="total" name="total" step="0.01" disabled>   
                       </div>
           </div>
         </div>
         <div class="form-group">
             <label class="required" for="remarks">{{ trans('cruds.invoice.fields.remarks') }}</label>
-            <input class="form-control {{ $errors->has('remarks') ? 'is-invalid' : '' }}" name="remarks" id="remarks" required/>
+            <input class="form-control {{ $errors->has('remarks') ? 'is-invalid' : '' }}" name="remarks" id="remarks" required  value ="" />
             @if($errors->has('remarks'))
                 <div class="invalid-feedback">
                     {{ $errors->first('remarks') }}
@@ -229,13 +276,31 @@ id-feedback">
             @endif
             <span class="help-block">{{ trans('cruds.invoice.fields.remarks_helper') }}</span>
         </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
+<div class="row">
+            <div class="form-group col-md-4">
+                <button class="btn btn-danger" id="save_invoice">
                     {{ trans('global.save') }}
                 </button>
             </div>
+                     <div class="form-group  col-md-4">
+  <input type="reset" value="Add New Invoice" class="btn btn-info">
+  </div>
+  </div>
+                      
+                  </div>
+           
         </form>
+     
+               <div class="alert alert-danger" id="failed_msg" style="display: none;">
+                  Something wentwrong please try again
+                    </div>
+        <div class="alert alert-success" id="success_msg" style="display: none;">
+                  Client Invoice Saved successfully<br>
+                 
+                              <a class="btn btn-xs btn-info" href="" id="print" target="_blank">
+                                        print
+                                    </a>
+                
     </div>
 </div>
 
@@ -253,7 +318,7 @@ function myFunction() {
             success: function (data) {
                 if (data.status == true) {
                     document.getElementById("client_name").value = data.value.notification.client.client_name;
-                    document.getElementById("client_id").value = data.value.notification.client.id;
+                    document.getElementById("client_id").value = data.value.notification.client_id;
                     document.getElementById("awb_id").value = data.value.id;
                     document.getElementById("goods_date").value = data.value.goods_date;
                     document.getElementById("no_of_pcs").value = data.value.no_of_pcs;
@@ -265,6 +330,7 @@ function myFunction() {
                     document.getElementById("delivery_date").value = data.value.delivery_date;
                     document.getElementById("receipt_no").value = data.value.receipt_no;
                     document.getElementById("receipt_date").value = data.value.receipt_date;
+                    document.getElementById("remarks").value = data.value.remarks;
                     document.getElementById("clearance_fee").value = data.fees.clearance_fee;
                     document.getElementById("loading_fee").value = data.fees.loading_fee;
                     document.getElementById("transportaion").value = data.fees.transportaion;
@@ -280,5 +346,74 @@ function myFunction() {
         });
 }
 </script>
-    @endsection
+    <script>
+
+    $(document).on('click','#new',function(){
+    alert("You clicked the element with and ID of 'test-element'");
+});
+    </script>
+<!---  -->
+<script>
+    $(document).on('click', '#save_invoice', function (e) {
+            e.preventDefault();
+            $('#invoice_date_error').text('');
+            $('#goods_release_error').text('');
+            $('#air_error').text('');
+            $('#legalization_error').text('');
+            $('#formalities_error').text('');
+            $('#demuerrage_error').text('');
+            $('#scan_error').text('');
+            $('#undertaking_error').text('');
+            $('#remarks_error').text('');
+            $('#other_error').text('');
+            $('#amount_error').text('');
+            $('#vat_error').text('');
+            $('#total_error').text('');
+            $('#awb_id_error').text('');
+            $('#client_id_error').text('');
+         
+            
+            
+            var formData = new FormData($('#invoiceForm')[0]);
+            $.ajax({
+                type: 'post',
+                enctype: 'multipart/form-data',
+                url: "{{ route("admin.invoices.store") }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    if (data.status == true) {
+                        document.getElementById("serial_no").value = data.value.serial_no;
+                    document.getElementById("amount").value =data.value.amount;
+                    document.getElementById("vat").value =data.value.vat;
+                    document.getElementById("total").value =data.value.total;
+                    
+                        $('#success_msg').show();
+                    
+                       /* var url = '{{ route("admin.invoices.print", ":id") }}';
+                            url = url.replace(':id', id);
+                       $('.success_msg').append('<a href="'+url+'"  target="_blank" >print</a>');*/
+                      
+                        $("#print").attr("href", "{{ route('admin.invoices.print', '')}}"+"/"+data.value.id);
+                        
+                    }
+                    else{
+
+                        $('#failed_msg').show();
+                    }
+                }, error: function (reject) {
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function (key, val) {
+                        $("#" + key + "_error").text(val[0]);
+                    });
+                }
+            });
+        });
+    </script>
+
+
+@endsection
+
     

@@ -23,7 +23,7 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.invoice.fields.id') }}
+                            {{ trans('cruds.invoice.fields.serial_number') }}
                         </th>
                         <th>
                             {{ trans('cruds.invoice.fields.awb') }}
@@ -32,7 +32,7 @@
                             {{ trans('cruds.invoice.fields.invoice_date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.invoice.fields.client') }}
+                            {{ trans('cruds.client.fields.client_name') }}
                         </th>
                         <th>
                             {{ trans('cruds.invoice.fields.amount') }}
@@ -43,9 +43,7 @@
                         <th>
                             {{ trans('cruds.invoice.fields.total') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.invoice.fields.remarks') }}
-                        </th>
+                        
                         <th>
                             &nbsp;
                         </th>
@@ -58,7 +56,7 @@
 
                             </td>
                             <td>
-                                {{ $invoice->id ?? '' }}
+                                {{ $invoice->serial_no ?? '' }}
                             </td>
                             <td>
                                 {{ $invoice->awb->awb_no ?? '' }}
@@ -78,21 +76,15 @@
                             <td>
                                 {{ $invoice->total ?? '' }}
                             </td>
+                          
                             <td>
-                                {{ $invoice->remarks ?? '' }}
-                            </td>
-                            <td>
-                                @can('invoice_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.invoices.show', $invoice->id) }}">
-                                        {{ trans('global.view') }}
+                          <a href="{{route('admin.invoices.print', $invoice->id)}}" target="_blank" class="btn-info">print</a> 
+                        
+                               @can('invoice_edit')
+                                    <a class="btn btn-xs btn-info" href="{{route('admin.invoices.edit', $invoice->id)}} ">
+                                         {{trans('global.edit')}}
                                     </a>
                                 @endcan
-                               
-                               <!-- can('invoice_edit')
-                                    <a class="btn btn-xs btn-info" href=" route('admin.invoices.edit', $invoice->id) ">
-                                         trans('global.edit') 
-                                    </a>
-                                endcan !-->
 
                                 @can('invoice_delete')
                                     <form action="{{ route('admin.invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
@@ -101,10 +93,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-                                <a class="btn btn-xs btn-info" href="{{ route('admin.invoices.print', $invoice->id) }}">
-                                    {{ trans('global.print') }}
-                                </a>
-                            </td>
+                </td>
 
                         </tr>
                     @endforeach
@@ -115,29 +104,7 @@
         <div>
         </div>
     </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        <strong style="color: #00008B;">Invoices Report By date</strong>
-    </div>
-    <div class="card-body">
-            <form action="{{route('admin.invoice.report')}}">
-                @csrf
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label>From</label>
-                <input name="start_date"  class="form-control date" >
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>To</label>
-                <input name="end_date"  class="form-control date ">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-xs btn-info">preview</button>
-            </form>
-    </div>
-</div>
-    
+</div>    
 
 
 

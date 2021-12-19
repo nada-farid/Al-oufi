@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Awb;
 use App\Models\Client;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\DB;
 use Gate;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -39,33 +40,168 @@ class InvoicesController extends Controller
 
     public function store(StoreInvoiceRequest $request)
     {
-        $invoice = Invoice::create($request->all());
+     
+        //calculations;
+   
+              $amount=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->delivery_amount+$request->customer_fees+$request->scan+$request->air+$request->formalities+$request->demuerrage+$request->legalization+$request->undertaking+$request->other;
+              
+              $temp=$request->delivery_amount+$request->customer_fees;
+      
+        $vat=(($amount-$temp)*15)/100;
+        $total=  $amount+$vat;
+    
+             $old_invoice=Invoice::where('awb_id',$request->awb_id)->first();
+        
+  
+     
+        if($old_invoice){
+    
+        
+         $invoice =$old_invoice->update([
+             'clearance_fee'=>$request->clearance_fee,
+            'loading_fee'=>$request->loading_fee,
+            'transportaion'=>$request->transportaion,
+             'delivery_amount'=>$request->delivery_amount,
+            'customer_fees'=>$request->customer_fees,
+             'serial_no'=>$request->serial_no,
+            'goods_release'=>$request->goods_release,
+            'invoice_date'=>$request->invoice_date,
+            'air'=>$request->air,
+            'legalization'=>$request->legalization,
+            'formalities'=>$request->formalities,
+            'demuerrage'=>$request->demuerrage,
+            'scan'=>$request->scan,
+            'undertaking'=>$request->undertaking,
+             'remarks'=>$request->remarks,
+            'other'=>$request->other,
+            'amount'=>$amount,
+            'vat'=>$vat,
+            'total'=>$total,
+            'awb_id'=>$request->awb_id,
+            'client_id'=>$request->client_id,
+            ]);
+         
+            
+$new_invoice=Invoice::where('awb_id',$request->awb_id)->first();
+        if ($new_invoice)
+        return response()->json([
+            'status' => true,
+            'msg' => 'تم الحفظ بنجاح',
+            'value'=>$new_invoice,
+        ]);
 
-        Alert::success('Success', 'invoice added sucessfully');
+    else
+        return response()->json([
+            'status' => false,
+            'msg' => 'فشل الحفظ برجاء المحاوله مجددا',
+        ]);
+    }
+            
+        
+        
+        
+        else{
+        
+        $numbers = mt_rand(1000000, 9999999)
+    . mt_rand(1000000, 9999999);
 
-        return redirect()->route('admin.invoices.index');
+   // shuffle the result
+   $serial = str_shuffle($numbers);
+
+       
+        $invoice = Invoice::create([
+             'clearance_fee'=>$request->clearance_fee,
+            'loading_fee'=>$request->loading_fee,
+            'transportaion'=>$request->transportaion,
+             'delivery_amount'=>$request->delivery_amount,
+            'customer_fees'=>$request->customer_fees,
+             'serial_no'=>$serial,
+            'goods_release'=>$request->goods_release,
+            'invoice_date'=>$request->invoice_date,
+            'air'=>$request->air,
+            'legalization'=>$request->legalization,
+            'formalities'=>$request->formalities,
+            'demuerrage'=>$request->demuerrage,
+            'scan'=>$request->scan,
+            'undertaking'=>$request->undertaking,
+             'remarks'=>$request->remarks,
+            'other'=>$request->other,
+           'amount'=> $amount,
+            'vat'=>$vat,
+            'total'=>$total,
+            'awb_id'=>$request->awb_id,
+            'client_id'=>$request->client_id,
+        
+            
+            ]);
+
+        if ($invoice)
+        return response()->json([
+            'status' => true,
+            'msg' => 'تم الحفظ بنجاح',
+            'value'=>$invoice,
+        ]);
+
+    else
+        return response()->json([
+            'status' => false,
+            'msg' => 'فشل الحفظ برجاء المحاوله مجددا',
+        ]);
+    }
     }
 
     public function edit(Invoice $invoice)
     {
         abort_if(Gate::denies('invoice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $awbs = Awb::pluck('awb_no', 'id')->prepend(trans('global.pleaseSelect'), '');
+/*        $awbs = Awb::pluck('awb_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clients = Client::pluck('client_name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+                        */
         $invoice->load('awb', 'client');
+        
+        
+        //
 
-        return view('admin.invoices.edit', compact('awbs', 'clients', 'invoice'));
+        return view('admin.invoices.edit', compact('invoice'));
     }
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        $invoice->update($request->all());
+       //calculations;
+   
+              $amount=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->delivery_amount+$request->customer_fees+$request->scan+$request->air+$request->formalities+$request->demuerrage+$request->legalization+$request->undertaking+$request->other;
+              
+              $temp=$request->delivery_amount+$request->customer_fees;
+      
+        $vat=(($amount-$temp)*15)/100;
+        $total=  $amount+$vat;
+    
+        $invoice->update([
+               'clearance_fee'=>$request->clearance_fee,
+            'loading_fee'=>$request->loading_fee,
+            'transportaion'=>$request->transportaion,
+           'delivery_amount'=>$request->delivery_amount,
+            'customer_fees'=>$request->customer_fees,
+            'serial_no'=>$request->serial_no,
+            'goods_release'=>$request->goods_release,
+            'invoice_date'=>$request->invoice_date,
+            'air'=>$request->air,
+            'legalization'=>$request->legalization,
+            'formalities'=>$request->formalities,
+            'demuerrage'=>$request->demuerrage,
+            'scan'=>$request->scan,
+            'undertaking'=>$request->undertaking,
+             'remarks'=>$request->remarks,
+            'other'=>$request->other,
+            'amount'=>$amount,
+            'vat'=>$vat,
+            'total'=>$total,
+            ]);
 
         Alert::success('Success', 'invoice updated sucessfully');
 
-        return redirect()->route('admin.invoices.index');
+        return redirect()->route('admin.invoices.edit',$invoice->id);
     }
 
     public function show(Invoice $invoice)
@@ -93,14 +229,5 @@ class InvoicesController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function report(request $request){
-    
-        $from=Carbon::parse(Carbon::createFromFormat('d/m/Y', $request->start_date)->format('d-m-Y')); 
-        $to=Carbon::parse(Carbon::createFromFormat('d/m/Y', $request->end_date)->format('d-m-Y')); 
-
-        $invoices = Invoice::whereBetween('invoice_date',[$from,$to])->with(['awb', 'client'])->get();
-
-        return view('admin.invoices.report', compact('invoices'));
-
-    }
+   
 }

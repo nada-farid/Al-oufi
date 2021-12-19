@@ -16,14 +16,17 @@ class UpdateClientRequest extends FormRequest
 
     public function rules()
     {
-        return [
+     return [
             'client_name' => [
                 'string',
                 'required',
             ],
+            'client_no'=>[
+               'nullable',
+                ],
             'tel_1' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'tel_2' => [
                 'string',
@@ -31,18 +34,18 @@ class UpdateClientRequest extends FormRequest
             ],
             'tax_number' => [
                 'string',
-                'required',
+                 'nullable',
             ],
             'short_name' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'email' => [
-                'required',
+                 'nullable',
             ],
             'address' => [
                 'string',
-                'required',
+                  'nullable',
             ],
             'fax' => [
                 'string',
@@ -50,7 +53,7 @@ class UpdateClientRequest extends FormRequest
             ],
             'contact_person' => [
                 'string',
-                'required',
+                 'nullable',
             ],
             'contact_person_2' => [
                 'string',
@@ -70,21 +73,22 @@ class UpdateClientRequest extends FormRequest
             ],
             'mobile_number_1' => [
                 'string',
-                'required',
+               'nullable',
             ],
             'mobile_number_2' => [
                 'string',
                 'nullable',
             ],
             'from' => [
-                'required',
+                  'nullable',
                 'date_format:' . config('panel.date_format'),
             ],
             'to' => [
-                'required',
+                  'nullable',
                 'date_format:' . config('panel.date_format'),
             ],
     
         ];
     }
 }
+

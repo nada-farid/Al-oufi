@@ -23,15 +23,17 @@ class NotificationController extends Controller
     {
         abort_if(Gate::denies('notification_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notifications = Notification::with(['client', 'media'])->get();
-
-        return view('admin.notifications.index', compact('notifications'));
+        $notifications = Notification::where('status',1)->with(['client', 'media'])->get();
+        
+        /*$clients = Client::pluck('client_name', 'id')->prepend(trans('global.pleaseSelect'), '');*/
+       $clients = Client::selectRaw("CONCAT (client_no, '-' ,client_name) as columns, id")->pluck('columns', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.notifications.index', compact('notifications','clients'));
     }
-    public function report()
+    public function report(Request $request)
     {
         abort_if(Gate::denies('notification_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notifications = Notification::where('appearance','yes')->with(['client', 'media'])->get();
+        $notifications = Notification::where('appearance',$request->appearance)->with(['client', 'media'])->get();
 
         return view('admin.notifications.report', compact('notifications'));
     }
@@ -49,14 +51,13 @@ class NotificationController extends Controller
     {
         $notification = Notification::create($request->all());
 
-        if ($request->input('awb_file', false)) {
-            $notification->addMedia(storage_path('tmp/uploads/' . basename($request->input('awb_file'))))->toMediaCollection('awb_file');
+      foreach ($request->input('awb_file', []) as $file) {
+            $notification->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('awb_file');
         }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $notification->id]);
         }
-
         Alert::success('Success', 'Notification added sucessfully');
 
         return redirect()->route('admin.notifications.index');
@@ -77,15 +78,18 @@ class NotificationController extends Controller
     {
         $notification->update($request->all());
 
-        if ($request->input('awb_file', false)) {
-            if (!$notification->awb_file || $request->input('awb_file') !== $notification->awb_file->file_name) {
-                if ($notification->awb_file) {
-                    $notification->awb_file->delete();
+       if (count($notification->awb_file) > 0) {
+            foreach ($notification->awb_file as $media) {
+                if (!in_array($media->file_name, $request->input('awb_file', []))) {
+                    $media->delete();
                 }
-                $notification->addMedia(storage_path('tmp/uploads/' . basename($request->input('awb_file'))))->toMediaCollection('awb_file');
             }
-        } elseif ($notification->awb_file) {
-            $notification->awb_file->delete();
+        }
+        $media = $notification->awb_file->pluck('file_name')->toArray();
+        foreach ($request->input('awb_file', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $notification->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('awb_file');
+            }
         }
 
         Alert::success('Success', 'Notification info updated sucessfully');
@@ -128,4 +132,25 @@ class NotificationController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
-}
+    public function changApparance(Request $request){
+        $notification=Notification::where('id',$request->notification_id)->first();
+       
+        $update=$notification->update([
+            'appearance'=>$request->value,
+            
+            ]);
+             if ($update)
+        return response()->json([
+            'status' => true,
+            
+        ]);
+
+    else
+        return response()->json([
+            'status' => false,
+       
+        ]);
+    }
+    }
+    
+

@@ -94,38 +94,43 @@
 
 
 @endsection
-
 @section('scripts')
 <script>
-    Dropzone.options.awbFileDropzone = {
+    var uploadedAwbFileMap = {}
+Dropzone.options.awbFileDropzone = {
     url: '{{ route('admin.notifications.storeMedia') }}',
-    maxFilesize: 40, // MB
-    maxFiles: 1,
+    maxFilesize: 100, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 40
+      size: 100
     },
     success: function (file, response) {
-      $('form').find('input[name="awb_file"]').remove()
-      $('form').append('<input type="hidden" name="awb_file" value="' + response.name + '">')
+      $('form').append('<input type="hidden" name="awb_file[]" value="' + response.name + '">')
+      uploadedAwbFileMap[file.name] = response.name
     },
     removedfile: function (file) {
       file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="awb_file"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedAwbFileMap[file.name]
       }
+      $('form').find('input[name="awb_file[]"][value="' + name + '"]').remove()
     },
     init: function () {
 @if(isset($notification) && $notification->awb_file)
-      var file = {!! json_encode($notification->awb_file) !!}
-          this.options.addedfile.call(this, file)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="awb_file" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
+          var files =
+            {!! json_encode($notification->awb_file) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="awb_file[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {

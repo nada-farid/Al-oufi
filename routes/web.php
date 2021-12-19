@@ -13,10 +13,11 @@ Auth::routes(['register' => false]);
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
    
     //invoices
 Route::get('invoice/printing/{id}','QrCodeController@index')->name('invoices.print');
-Route::get('','QrCodeController@index')->name('invoices.print');
+
 Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -42,6 +43,8 @@ Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
     Route::post('notifications/ckmedia', 'NotificationController@storeCKEditorImages')->name('notifications.storeCKEditorImages');
     Route::resource('notifications', 'NotificationController');
     Route::get('notification/reports','NotificationController@report')->name('notifications.report');
+      Route::Post('notification/Apperance','NotificationController@changApparance')->name('notifications.changApparance');
+    
 
     // Awb
     Route::delete('awbs/destroy', 'AwbController@massDestroy')->name('awbs.massDestroy');
@@ -68,7 +71,9 @@ Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
     // Invoices
     Route::delete('invoices/destroy', 'InvoicesController@massDestroy')->name('invoices.massDestroy');
     Route::resource('invoices', 'InvoicesController');
-    Route::get('invoice/reports','InvoicesController@report')->name('invoice.report');
+    Route::get('reports','ReportController@index')->name('invoices.reports');
+    Route::get('reportsByDate','ReportController@report')->name('invoice.reportsByDate');
+    Route::get('reportsByClient','ReportController@report')->name('invoice.reportsByClient');
     
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
@@ -82,6 +87,11 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
     }
 });
+Route::group(['namespace' => 'Admin'],function () {
+Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
+});
 
-
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
 

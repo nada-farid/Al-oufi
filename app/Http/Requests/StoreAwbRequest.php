@@ -20,6 +20,7 @@ class StoreAwbRequest extends FormRequest
             'awb_no' => [
                 'required',
                 'string',
+                'unique:awbs,deleted_at,NULL'
             ],
             'no_of_pcs' => [
                 'required',
@@ -46,40 +47,38 @@ class StoreAwbRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
             ],
             'delivery_no' => [
-                'required',
+               'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
             'delivery_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
+                'nullable',
             ],
             'delivery_amount' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'nullable',
             ],
             'goods_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'customer_fees' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'nullable',
             ],
             'receipt_no' => [
                 'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                
+                
             ],
             'receipt_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
+            ],
+              'serial_number'=>[
+                'required',
+                ],
+                   'declaration_file' => [
+                'array',
             ],
         ];
     }

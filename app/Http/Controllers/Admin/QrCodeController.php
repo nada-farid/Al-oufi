@@ -14,23 +14,8 @@ class QrCodeController extends Controller
     {
       
       $invoice = Invoice::where('id',$id)->with('client','awb')->first();
-    
-      $weight=$invoice->awb->goods_weight;
-     
-      global $id;
-
-      if($weight<=300)
-       $id=1;
-      elseif(300<$weight &&  $weight<=1000) 
-       $id=2;
-      elseif(1000<$weight&&$weight<=2000)
-       $id=3;
-      else 
-       $id=4;
-
-       $fees=DB::table('client_client_fee')->where('client_id','=',$invoice->client->id)->where('client_fee_id',$GLOBALS['id'])->first();
   
-       return view('qrcode',compact('invoice','fees'));
+       return view('admin.invoices.printing',compact('invoice'));
     }
     public function details($id){
 

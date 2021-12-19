@@ -25,7 +25,7 @@ class ClientsController extends Controller
         abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Client::with(['fees'])->select(sprintf('%s.*', (new Client())->table));
+            $query = Client::orderBy('client_no','Asc')->with(['fees'])->select(sprintf('%s.*', (new Client())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -57,8 +57,8 @@ class ClientsController extends Controller
 
             return $table->make(true);
         }
-
-        return view('admin.clients.index');
+    $client_number= Client::count();
+        return view('admin.clients.index',compact('client_number'));
     }
 
     public function create()
@@ -72,6 +72,7 @@ class ClientsController extends Controller
 
     public function store(StoreClientRequest $request)
     {
+   
         $client = Client::create($request->all());
     
          for($i=1;$i<5;$i++){
@@ -90,7 +91,7 @@ class ClientsController extends Controller
         return response()->json([
             'status' => true,
             'msg' => 'تم الحفظ بنجاح',
-            'value'=>$client->id,
+            'value'=>$client->client_no,
         ]);
 
     else

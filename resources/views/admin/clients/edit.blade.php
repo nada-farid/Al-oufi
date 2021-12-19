@@ -20,7 +20,7 @@
                             <label
                                 for="client_no">{{ trans('cruds.client.fields.client_no') }}</label>
                             <input class="form-control {{ $errors->has('client_no') ? 'is-invalid' : '' }}" type="text"
-                                name="client_no" id="client_no"  disabled    value="{{$client->id }}" />
+                                name="client_no" id="client_no" value="{{$client->client_no }}" />
                         </div>
                         <div class="form-group col-md-6">
                             <label class="required"
@@ -36,10 +36,10 @@
                             <span class="help-block">{{ trans('cruds.client.fields.client_name_helper') }}</span>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required"
+                            <label class=""
                                 for="tel_1">{{ trans('cruds.client.fields.tel_1') }}</label>
                             <input class="form-control {{ $errors->has('tel_1') ? 'is-invalid' : '' }}" type="text"
-                                name="tel_1" id="tel_1"  required value="{{ old('tel_1', $client->tel_1) }}">
+                                name="tel_1" id="tel_1"   value="{{ old('tel_1', $client->tel_1) }}">
                             @if ($errors->has('tel_1'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('tel_1') }}
@@ -49,11 +49,11 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label class="required"
+                            <label class=""
                                 for="tax_number">{{ trans('cruds.client.fields.tax_number') }}</label>
                             <input class="form-control {{ $errors->has('tax_number') ? 'is-invalid' : '' }}"
                                 type="text" name="tax_number" id="tax_number" value="{{ old('tax_number', $client->tax_number) }}" 
-                                required>
+                                >
                             @if ($errors->has('tax_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('tax_number') }}
@@ -62,11 +62,11 @@
                             <span class="help-block">{{ trans('cruds.client.fields.tax_number_helper') }}</span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="required"
+                            <label class=""
                                 for="short_name">{{ trans('cruds.client.fields.short_name') }}</label>
                             <input class="form-control {{ $errors->has('short_name') ? 'is-invalid' : '' }}"
                                 type="text" name="short_name" id="short_name" value="{{ old('short_name',$client->short_name) }}"
-                                required>
+                                >
                             @if ($errors->has('short_name'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('short_name') }}
@@ -86,10 +86,10 @@
                             <span class="help-block">{{ trans('cruds.client.fields.tel_2_helper') }}</span>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required"
+                            <label class=""
                                 for="email">{{ trans('cruds.client.fields.email') }}</label>
                             <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
-                                name="email" id="email" value="{{ old('email',$client->email) }}" required>
+                                name="email" id="email" value="{{ old('email',$client->email) }}" >
                             @if ($errors->has('email'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('email') }}
@@ -98,10 +98,10 @@
                             <span class="help-block">{{ trans('cruds.client.fields.email_helper') }}</span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="required"
+                            <label class=""
                                 for="address">{{ trans('cruds.client.fields.address') }}</label>
                             <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text"
-                                name="address" id="address" value="{{ old('address', $client->address) }}" required>
+                                name="address" id="address" value="{{ old('address', $client->address) }}" >
                             @if ($errors->has('address'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('address') }}
@@ -121,11 +121,11 @@
                             <span class="help-block">{{ trans('cruds.client.fields.fax_helper') }}</span>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required"
+                            <label class=""
                                 for="contact_person">{{ trans('cruds.client.fields.contact_person') }}</label>
                             <input class="form-control {{ $errors->has('contact_person') ? 'is-invalid' : '' }}"
                                 type="text" name="contact_person" id="contact_person"
-                                value="{{ old('contact_person', $client->contact_person) }}" required>
+                                value="{{ old('contact_person', $client->contact_person) }}" >
                             @if ($errors->has('contact_person'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('contact_person') }}
@@ -182,11 +182,11 @@
                             <span class="help-block">{{ trans('cruds.client.fields.iban_helper') }}</span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="required"
+                            <label class=""
                                 for="mobile_number_1">{{ trans('cruds.client.fields.mobile_number_1') }}</label>
                             <input class="form-control {{ $errors->has('mobile_number_1') ? 'is-invalid' : '' }}"
                                 type="text" name="mobile_number_1" id="mobile_number_1"
-                                value="{{ old('mobile_number_1',$client->mobile_number_1) }}" required>
+                                value="{{ old('mobile_number_1',$client->mobile_number_1) }}" >
                             @if ($errors->has('mobile_number_1'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('mobile_number_1') }}
@@ -240,10 +240,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required"
+                                <label 
                                     for="from">{{ trans('cruds.client.fields.from') }}</label>
                                 <input class="form-control date {{ $errors->has('from') ? 'is-invalid' : '' }}"
-                                    type="text" name="from" id="from" value="{{ old('from',$client->from) }}" required>
+                                    type="text" name="from" id="from" value="{{ old('from',$client->from) }}" >
                                 @if ($errors->has('from'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('from') }}
@@ -252,9 +252,9 @@
                                 <span class="help-block">{{ trans('cruds.client.fields.from_helper') }}</span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="required" for="to">{{ trans('cruds.client.fields.to') }}</label>
+                                <label for="to">{{ trans('cruds.client.fields.to') }}</label>
                                 <input class="form-control date {{ $errors->has('to') ? 'is-invalid' : '' }}"
-                                    type="text" name="to" id="to" value="{{ old('to',$client->to) }}" required>
+                                    type="text" name="to" id="to" value="{{ old('to',$client->to) }}" >
                                 @if ($errors->has('to'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('to') }}

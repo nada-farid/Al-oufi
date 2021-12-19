@@ -24,7 +24,7 @@ class AwbController extends Controller
     {
         abort_if(Gate::denies('awb_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $awbs = Awb::with(['media'])->get();
+        $awbs = Awb::with(['notification.client','media'])->get();
 
         return view('admin.awbs.index', compact('awbs'));
     }
@@ -38,7 +38,7 @@ class AwbController extends Controller
 
     public function store(StoreAwbRequest $request)
     {
-       
+     
         $notification = Notification::where('awb_no',$request->awb_no)->first();
         if(! $notification){
         Alert::error('OOps','You must add this AWB in notification screen first');
@@ -47,6 +47,7 @@ class AwbController extends Controller
         
         $awb = Awb::create([
              'awb_no'=>$request->awb_no,
+             'serial_number'=>$request->serial_number,
              'no_of_pcs'=>$request->no_of_pcs,
              'goods_type'=>$request->goods_type,
              'decleration_no'=>$request->decleration_no,
@@ -65,15 +66,22 @@ class AwbController extends Controller
 
         ]);
 
-        if ($request->input('declaration_file', false)) {
-            $awb->addMedia(storage_path('tmp/uploads/' . basename($request->input('declaration_file'))))->toMediaCollection('declaration_file');
+        if($awb)
+        $notification->update([
+           'status'=>0,
+        ]);
+        
+
+     foreach ($request->input('declaration_file', []) as $file) {
+            $awb->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('declaration_file');
         }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $awb->id]);
+        
         }
         Alert::success('Success', 'Awb added sucessfully');
-        return redirect()->route('admin.awbs.index');
+        return redirect()->route('admin.awbs.create');
     }
 
     public function edit(Awb $awb)
@@ -89,17 +97,20 @@ class AwbController extends Controller
     {
         $awb->update($request->all());
 
-        if ($request->input('declaration_file', false)) {
-            if (!$awb->declaration_file || $request->input('declaration_file') !== $awb->declaration_file->file_name) {
-                if ($awb->declaration_file) {
-                    $awb->declaration_file->delete();
+    if (count($awb->declaration_file) > 0) {
+            foreach ($awb->declaration_file as $media) {
+                if (!in_array($media->file_name, $request->input('declaration_file', []))) {
+                    $media->delete();
                 }
-                $awb->addMedia(storage_path('tmp/uploads/' . basename($request->input('declaration_file'))))->toMediaCollection('declaration_file');
             }
-        } elseif ($awb->declaration_file) {
-            $awb->declaration_file->delete();
         }
-        
+        $media = $awb->declaration_file->pluck('file_name')->toArray();
+        foreach ($request->input('declaration_file', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $awb->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('declaration_file');
+            }
+        }
+
         Alert::success('Success', 'Awb updated sucessfully');
         return redirect()->route('admin.awbs.index');
     }
@@ -158,6 +169,10 @@ class AwbController extends Controller
 
         global $id;
         $awb=Awb::where('awb_no',$request->num)->first();
+          if(!$awb)
+        return response()->json([
+            'status' => false,
+        ]);
 
         $weight=$awb->goods_weight;
         if($weight<=300)
@@ -169,12 +184,15 @@ class AwbController extends Controller
         else 
          $id=4;
 
-        $awb=$awb->with('notification.client')->first();
+        $awb=Awb::where('awb_no',$request->num)->with('notification.client')->first();
 
-        $fees=DB::table('client_client_fee')->where('client_id','=',$awb->notification->client->id)->where('client_fee_id',$GLOBALS['id'])->first();
+        $fees=DB::table('client_client_fee')->where('client_id','=',$awb->notification->client_id)->where('client_fee_id',$GLOBALS['id'])->first();
+        
+        
 
         $amount=$fees->clearance_fee+$fees->transportaion+$fees->loading_fee+$awb->customer_fees+$awb->delivery_amount;
-        $vat=(($amount)*15)/100;
+        $sum_vat=$fees->clearance_fee+$fees->transportaion+$fees->loading_fee;
+        $vat=(($sum_vat)*15)/100;
         $total=$amount+$vat;
         if($awb)
         return response()->json([
@@ -186,10 +204,7 @@ class AwbController extends Controller
             'total'=>$total,
         ]);
 
-    else
-        return response()->json([
-            'status' => false,
-        ]);
+   
     }
 
     

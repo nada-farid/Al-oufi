@@ -20,9 +20,10 @@ class StoreNotificationRequest extends FormRequest
             'awb_no' => [
                 'string',
                 'required',
+                 'unique:notifications,deleted_at,NULL',
             ],
             'client_id' => [
-                'required',
+                'nullable',
                 'integer',
             ],
             'awb_date' => [

@@ -33,6 +33,7 @@ class Awb extends Model implements HasMedia
 
     protected $fillable = [
         'awb_no',
+        'serial_number',
         'no_of_pcs',
         'goods_type',
         'decleration_no',
@@ -52,7 +53,7 @@ class Awb extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public function registerMediaConversions(Media $media = null)
+   public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
@@ -67,10 +68,10 @@ class Awb extends Model implements HasMedia
     {
         $this->attributes['declaration_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
-
+    
     public function getDeclarationFileAttribute()
     {
-        return $this->getMedia('declaration_file')->last();
+        return $this->getMedia('declaration_file');
     }
 
     public function getDeliveryDateAttribute($value)

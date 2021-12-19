@@ -17,10 +17,7 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'awb_id' => [
-                'required',
-                'integer',
-            ],
+           
             'goods_release' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
@@ -29,22 +26,9 @@ class UpdateInvoiceRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'client_id' => [
-                'required',
-                'integer',
-            ],
-            'amount' => [
-                'required',
-            ],
-            'vat' => [
-                'required',
-            ],
-            'total' => [
-                'required',
-            ],
-            'remarks' => [
-                'required',
-            ],
+       
+     
+            
         ];
     }
 }

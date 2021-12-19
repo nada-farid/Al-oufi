@@ -7,6 +7,14 @@
 
     <div class="card-body">
         <div class="table-responsive">
+            <div class="card-body">
+        <div class="form-group">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.notifications.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
+            </div>
             <table class=" table table-bordered table-striped table-hover datatable datatable-Notification">
                 <thead>
                     <tr>
