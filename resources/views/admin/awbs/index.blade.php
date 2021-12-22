@@ -153,7 +153,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+   // order: [[ 1, 'desc' ]],
     pageLength: 25,
   });
   let table = $('.datatable-Awb:not(.ajaxTable)').DataTable({ buttons: dtButtons })

@@ -10,7 +10,6 @@
         <form method="POST" action="{{ route("admin.awbs.update", [$awb->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            @csrf
             <div class="card">
                 <div class="card-header">
                     <strong style="color: #00008B;"> AWB Information</strong>
