@@ -45,12 +45,14 @@ class InvoicesController extends Controller
    
               $amount=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->delivery_amount+$request->customer_fees+$request->scan+$request->air+$request->formalities+$request->demuerrage+$request->legalization+$request->undertaking+$request->other;
               
-              $temp=$request->delivery_amount+$request->customer_fees;
+                
+              $temp=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->scan+$request->other;
       
-        $vat=(($amount-$temp)*15)/100;
-        $total=  $amount+$vat;
+              $vat=($temp*15)/100;
+       
+              $total=  $amount+$vat;
     
-             $old_invoice=Invoice::where('awb_id',$request->awb_id)->first();
+              $old_invoice=Invoice::where('awb_id',$request->awb_id)->first();
         
   
      
@@ -102,12 +104,12 @@ $new_invoice=Invoice::where('awb_id',$request->awb_id)->first();
         
         else{
         
-        $numbers = mt_rand(1000000, 9999999)
+      /*  $numbers = mt_rand(1000000, 9999999)
     . mt_rand(1000000, 9999999);
 
    // shuffle the result
-   $serial = str_shuffle($numbers);
-
+   $serial = str_shuffle($numbers);*/
+   $serial=Invoice::latest()->first()->serial_no;
        
         $invoice = Invoice::create([
              'clearance_fee'=>$request->clearance_fee,
@@ -115,7 +117,7 @@ $new_invoice=Invoice::where('awb_id',$request->awb_id)->first();
             'transportaion'=>$request->transportaion,
              'delivery_amount'=>$request->delivery_amount,
             'customer_fees'=>$request->customer_fees,
-             'serial_no'=>$serial,
+             'serial_no'=>$serial+1,
             'goods_release'=>$request->goods_release,
             'invoice_date'=>$request->invoice_date,
             'air'=>$request->air,
@@ -172,9 +174,9 @@ $new_invoice=Invoice::where('awb_id',$request->awb_id)->first();
    
               $amount=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->delivery_amount+$request->customer_fees+$request->scan+$request->air+$request->formalities+$request->demuerrage+$request->legalization+$request->undertaking+$request->other;
               
-              $temp=$request->delivery_amount+$request->customer_fees;
+              $temp=$request->clearance_fee+$request->loading_fee+$request->transportaion+$request->scan+$request->other;
       
-        $vat=(($amount-$temp)*15)/100;
+        $vat=($temp*15)/100;
         $total=  $amount+$vat;
     
         $invoice->update([
@@ -229,5 +231,36 @@ $new_invoice=Invoice::where('awb_id',$request->awb_id)->first();
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-   
-}
+    public function status(Request $request){
+
+           $invoice=Invoice::findOrfail($request->invoice_id);
+            $update=$invoice->update([
+                'status'=>$request->value,
+                
+                ]);
+                 if ($update)
+            return response()->json([
+                'status' => true,
+                
+            ]);
+    
+        else
+            return response()->json([
+                'status' => false,
+           
+            ]);
+        }
+
+        public function returend()
+        {
+            abort_if(Gate::denies('invoice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    
+            $invoices = Invoice::where('status','returned')->with(['awb', 'client'])->get();
+    
+            return view('admin.invoices.returned', compact('invoices'));
+        }
+        }
+        
+    
+
+

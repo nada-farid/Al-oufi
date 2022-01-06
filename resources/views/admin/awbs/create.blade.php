@@ -29,10 +29,7 @@
                 <label  for="client_name">{{ trans('cruds.awb.fields.client_name') }}</label>
                 <input class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}" type="text" name="client_name" id="client_name" disabled   value="" />
               </div>
-                    <div class="form-group col-md-3">
-                <label  class="required" for="serial_number">{{ trans('cruds.awb.fields.serial_number') }}</label>
-                <input class="form-control {{ $errors->has('serial_number') ? 'is-invalid' : '' }}" type="text" name="serial_number" id="serial_number"   value="" required/>
-              </div>
+           
                     </div>
                 </div>
             </div>

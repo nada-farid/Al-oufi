@@ -117,9 +117,10 @@
             </div>
             <div class="form-group col-md-4">
                 <label for="awb_file">{{ trans('cruds.notification.fields.awb_file') }}</label>
+                <br>
                    @foreach($notification->awb_file as $key => $media)
-                                <a class="form-control"  href="{{ $media->getUrl() }}" target="_blank">
-                                    {{ trans('global.view_file') }}
+                                <a  href="{{ $media->getUrl() }}" target="_blank">
+                                    {{ $media->file_name  }}
                                 </a>
                             @endforeach
                             </div>

@@ -16,6 +16,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('vat', 15, 2);
             $table->decimal('total', 15, 2);
             $table->longText('remarks');
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

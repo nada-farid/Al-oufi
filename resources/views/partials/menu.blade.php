@@ -128,6 +128,15 @@
             Invoices Reports
         </a>
     </li>
+    <li class="c-sidebar-nav-item">
+        <a href="{{ route("admin.invoices.returned") }}" class="c-sidebar-nav-link {{ request()->is("admin/invoices") || request()->is("admin/invoices/*") ? "c-active" : "" }}">
+            <i class="fa-fw fas fa-remove c-sidebar-nav-icon">
+
+            </i>
+            Returned Invoices 
+        </a>
+    </li>
+ 
         @can('user_alert_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
@@ -169,4 +178,4 @@
         </li>
     </ul>
 
-</div>z
+</div>

@@ -44,10 +44,10 @@ class AwbController extends Controller
         Alert::error('OOps','You must add this AWB in notification screen first');
         return redirect()->route('admin.awbs.create');
         }
-        
+        $serial_number=Awb ::latest()->first()->serial_number; 
         $awb = Awb::create([
              'awb_no'=>$request->awb_no,
-             'serial_number'=>$request->serial_number,
+             'serial_number'=>$serial_number+1,
              'no_of_pcs'=>$request->no_of_pcs,
              'goods_type'=>$request->goods_type,
              'decleration_no'=>$request->decleration_no,

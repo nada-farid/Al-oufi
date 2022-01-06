@@ -25,9 +25,9 @@ class ReportController extends Controller
         $from=Carbon::parse(Carbon::createFromFormat('d/m/Y', $request->start_date)->format('d-m-Y')); 
         $to=Carbon::parse(Carbon::createFromFormat('d/m/Y', $request->end_date)->format('d-m-Y')); 
     if($request->client_id)
-        $invoices = Invoice::where('client_id', $request->client_id)->whereBetween('invoice_date',[$from,$to])->with(['awb', 'client'])->get();
+        $invoices = Invoice::where('status','active')->where('client_id', $request->client_id)->whereBetween('invoice_date',[$from,$to])->with(['awb', 'client'])->get();
    else
-     $invoices = Invoice::whereBetween('invoice_date',[$from,$to])->with(['awb', 'client'])->get();   
+     $invoices = Invoice::where('status','active')->whereBetween('invoice_date',[$from,$to])->with(['awb', 'client'])->get();   
         $amount= $invoices->sum('amount');  
         $vat= $invoices->sum('amount');  
         $total= $invoices->sum('total');  

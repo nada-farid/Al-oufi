@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
 {
+    public const STATUS_SELECT = [
+        'active'   => 'Active',
+        'returned' => 'Returned',
+  
+    ];
+
     use SoftDeletes;
 
     public $table = 'invoices';
@@ -43,6 +49,7 @@ class Invoice extends Model
         'undertaking',
         'other',
         'remarks',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',

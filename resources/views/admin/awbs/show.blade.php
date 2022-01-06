@@ -235,9 +235,10 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="declaration_file">{{ trans('cruds.awb.fields.declaration_file') }}</label>
+                <br>
               @foreach($awb->declaration_file as $key => $media)
-                                <a  class="form-control"  href="{{ $media->getUrl() }}" target="_blank">
-                                    {{ trans('global.view_file') }}
+                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                    {{ $media->file_name  }}
                                 </a>
                             @endforeach
                             </div>

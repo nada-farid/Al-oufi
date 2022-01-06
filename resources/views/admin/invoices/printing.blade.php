@@ -381,7 +381,13 @@ p.credits {
 	<header></header>
         
         <div class="receipt-wrapper">
-            <div class="page-top"><p class="page-title">فاتورة ضريبية</p>
+            <div class="page-top"><p class="page-title">
+                @if($invoice->status=='active')
+                فاتورة ضريبية
+                @else
+                فاتورة ضريبية مرتجعة
+                @endif
+            </p>
             <p class="page-title">Tax Invoice No :{{$invoice->serial_no}}</p>
                     <div class="qr">
                         {!! QrCode::size(150)->generate(URL::Route('qr_details', ['id' => $invoice->id]))!!}

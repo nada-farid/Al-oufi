@@ -3,9 +3,6 @@
 @can('invoice_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.invoices.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.invoice.title_singular') }}
-            </a>
         </div>
     </div>
 @endcan
@@ -44,10 +41,6 @@
                             {{ trans('cruds.invoice.fields.total') }}
                         </th>
                         <th>
-                            Status
-                        </th>
-                        <th>
-                            &nbsp;
                         </th>
                    
                     </tr>
@@ -80,46 +73,10 @@
                                 {{ $invoice->total ?? '' }}
                             </td>
                             <td>
-                     
-                                <!--<select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="selection" onchange="myFunction({{ $invoice->id  }})">
-                                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                    @foreach(App\Models\Invoice::STATUS_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('status', $invoice->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>-->
-                              
-                                @if($invoice->status=='active')
-                                <select id="selection"onchange="myFunction({{ $invoice->id  }})">
-			<option value="active" selected>active</option>
-			<option value="returned">returned</option>
-		</select>
-		@else
-		                          <select id="selection"onchange="myFunction({{ $invoice->id  }})">
-			<option value="active" >active</option>
-			<option value="returned" selected>returned</option>
-		</select>
-		@endif
-	
-                            </td>
-                            <td>
-                          <a href="{{route('admin.invoices.print', $invoice->id)}}" target="_blank" class="btn btn-xs btn-primary">print</a> 
+                          <a href="{{route('admin.invoices.print', $invoice->id)}}" target="_blank"  class="btn btn-xs btn-info">print</a> 
                         
-                               @can('invoice_edit')
-                                    <a class="btn btn-xs btn-info" href="{{route('admin.invoices.edit', $invoice->id)}} ">
-                                         {{trans('global.edit')}}
-                                    </a>
-                                @endcan
-
-                                @can('invoice_delete')
-                                   <form action="{{ route('admin.invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
+                   
                 </td>
-               
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -137,32 +94,6 @@
 @endsection
 @section('scripts')
 @parent
-<script>
-    function myFunction(id) {
-        var selected = document.getElementById("selection").value;
-       // alert(selected);
-       
-            $.ajax({
-                      type: 'Post',
-                      url: "{{ route('admin.invoices.changeStatus') }}",
-                      data:{
-                          "_token": "{{ csrf_token() }}",
-                          'value':selected,
-                          'invoice_id':id,
-                      },
-                      success: function (data) {
-                          if (data.status == true) {
-                         
-                             showFrontendAlert('success','Status changes successfully','')
-                          }
-                          else
-                          showFrontendAlert('Error','Something went wrong','')
-                      },
-                  });
-          
-      }
-      </script>
-
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)

@@ -74,9 +74,6 @@ class StoreAwbRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-              'serial_number'=>[
-                'required',
-                ],
                    'declaration_file' => [
                 'array',
             ],

@@ -123,6 +123,7 @@ class NotificationController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
+        
         abort_if(Gate::denies('notification_create') && Gate::denies('notification_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model         = new Notification();
@@ -133,8 +134,8 @@ class NotificationController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
     public function changApparance(Request $request){
+        
         $notification=Notification::where('id',$request->notification_id)->first();
-       
         $update=$notification->update([
             'appearance'=>$request->value,
             

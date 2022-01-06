@@ -74,6 +74,10 @@ Route::get('/qr_details/{id}', 'QrCodeController@details')->name('qr_details');
     Route::get('reports','ReportController@index')->name('invoices.reports');
     Route::get('reportsByDate','ReportController@report')->name('invoice.reportsByDate');
     Route::get('reportsByClient','ReportController@report')->name('invoice.reportsByClient');
+    Route::Post('status','InvoicesController@status')->name('invoices.changeStatus');
+    Route::get('returendInvoices','InvoicesController@returend')->name('invoices.returned');
+    
+    
     
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

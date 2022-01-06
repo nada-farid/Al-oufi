@@ -118,7 +118,7 @@
                 </select>
                 </div>
                  <div class="col-md-4">
-            <button type="submitt" class="btn btn-xs btn-info" >Preview</button
+            <button type="submitt" class="btn btn-xs btn-info" >Preview</button>
              </div>
              </div>
             </form>
@@ -184,8 +184,7 @@
                                 {{ App\Models\Notification::APPEARANCE_SELECT[$notification->appearance] ?? '' }}
                             </td>-->
                             <td>
-          <input type="hidden" value="{{$notification->id}}" id="notific_id">
-<select class="form-control {{ $errors->has('appearance') ? 'is-invalid' : '' }}" name="appearance" id="mySelect" onchange="myFunction()" required >
+         <select class="form-control {{ $errors->has('appearance') ? 'is-invalid' : '' }}" name="appearance" id="selection" onchange="myFunction({{$notification->id}})" required >
                     <option value disabled {{ old('appearance', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\Notification::APPEARANCE_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('appearance', $notification->appearance) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -280,9 +279,9 @@
 </script>
 <script>
 function myFunction(id) {
-  var selected = document.getElementById("mySelect").value;
- 
-  var id=document.getElementById("notific_id").value;
+  var selected = document.getElementById("selection").value;
+ // var id=document.getElementById("notific_id").value;
+  alert(id);
   
       $.ajax({
                 type: 'Post',
