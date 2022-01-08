@@ -6,6 +6,7 @@ use App\Models\Notification;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule; 
 
 class StoreNotificationRequest extends FormRequest
 {
@@ -20,7 +21,9 @@ class StoreNotificationRequest extends FormRequest
             'awb_no' => [
                 'string',
                 'required',
-                 'unique:notifications',
+                 Rule::unique('notifications')->where(function($query) {
+                    $query->where('status', '=', '1');
+                })
             ],
             'client_id' => [
                 'nullable',

@@ -441,7 +441,7 @@ p.credits {
             <div class="col-3 receipt-details-wrap">
             <p class="receipt-details">{{$invoice->client->client_no }}</p>
             <p class="receipt-details">{{$invoice->awb->goods_weight }}</p>
-            <p class="receipt-details date">{{$invoice->invoice_date}}</p>
+            <p class="receipt-details date">{{$invoice->awb->delivery_date}}</p>
             </div>
         </div>
         

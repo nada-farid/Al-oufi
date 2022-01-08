@@ -23,10 +23,11 @@ class NotificationController extends Controller
     {
         abort_if(Gate::denies('notification_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notifications = Notification::where('status',1)->with(['client', 'media'])->get();
+      $notifications = Notification::where('status',1)->orderBy('created_at', 'desc')->with(['client', 'media'])->get();
+      //return    $notifications ;
         
         /*$clients = Client::pluck('client_name', 'id')->prepend(trans('global.pleaseSelect'), '');*/
-       $clients = Client::selectRaw("CONCAT (client_no, '-' ,client_name) as columns, id")->pluck('columns', 'id')->prepend(trans('global.pleaseSelect'), '');
+   $clients = Client::selectRaw("CONCAT (client_no, '-' ,client_name) as columns, id")->pluck('columns', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('admin.notifications.index', compact('notifications','clients'));
     }
     public function report(Request $request)
@@ -123,7 +124,6 @@ class NotificationController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        
         abort_if(Gate::denies('notification_create') && Gate::denies('notification_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model         = new Notification();
@@ -134,8 +134,8 @@ class NotificationController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
     public function changApparance(Request $request){
-        
         $notification=Notification::where('id',$request->notification_id)->first();
+    
         $update=$notification->update([
             'appearance'=>$request->value,
             
@@ -143,6 +143,7 @@ class NotificationController extends Controller
              if ($update)
         return response()->json([
             'status' => true,
+            'date'=>   $notification,
             
         ]);
 

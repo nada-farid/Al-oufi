@@ -26,13 +26,27 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.awb.fields.awb_no_helper') }}</span>
             </div>
-            <div class="form-group col-md-3">
+         <!--   <div class="form-group col-md-3">
                 <label  for="client_name">{{ trans('cruds.awb.fields.client_name') }}</label>
                 @php
                  $client= App\Models\Client::where('id',$awb->notification->client_id)->first()    
                 @endphp
                 <input class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}" type="text" name="client_name" id="client_name" disabled   value="{{$client->client_name }}" />
-              </div>
+              </div>-->
+              <div class="form-group col-md-4">
+                <label class="required" for="client_name">{{ trans('cruds.awb.fields.client_name') }}</label>
+                <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
+                    @foreach($clients as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('client_id') ? old('client_id') : $client->id?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('client'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('client') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.notification.fields.client_helper') }}</span>
+            </div>
                           <div class="form-group col-md-3">
                 <label  for="serial_number">{{ trans('cruds.awb.fields.serial_number') }}</label>
                 <input class="form-control {{ $errors->has('serial_number') ? 'is-invalid' : '' }}" type="text" name="serial_number" id="serial_number"   value="{{$awb->serial_number}}" />

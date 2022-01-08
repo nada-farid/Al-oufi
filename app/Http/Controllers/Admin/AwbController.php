@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateAwbRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Awb;
 use App\Models\Notification;
+use App\Models\Client;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -39,7 +40,7 @@ class AwbController extends Controller
     public function store(StoreAwbRequest $request)
     {
      
-        $notification = Notification::where('awb_no',$request->awb_no)->first();
+        $notification = Notification::where('awb_no',$request->awb_no)->where('status',1)->first();
         if(! $notification){
         Alert::error('OOps','You must add this AWB in notification screen first');
         return redirect()->route('admin.awbs.create');
@@ -90,11 +91,18 @@ class AwbController extends Controller
 
         $awb->load('notification');
 
-        return view('admin.awbs.edit', compact('awb'));
+        $clients = Client::selectRaw("CONCAT (client_no, '-' ,client_name) as columns, id")->pluck('columns', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.awbs.edit', compact('awb','clients'));
     }
 
     public function update(UpdateAwbRequest $request, Awb $awb)
     {
+         $notification=Notification::findOrfail($awb->notification_id);
+         $notification->update([
+             'client_id'=>$request->client_id,
+         ]);
+
         $awb->update($request->all());
 
     if (count($awb->declaration_file) > 0) {
@@ -152,7 +160,7 @@ class AwbController extends Controller
 
     public function check_awb(Request $request){
 
-        $notification= Notification::where('awb_no',$request->num)->with('client')->first();
+        $notification= Notification::where('awb_no',$request->num)->where('status',1)->with('client')->first();
 
         if($notification)
         return response()->json([
