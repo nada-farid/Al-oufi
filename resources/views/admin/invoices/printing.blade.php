@@ -15,7 +15,6 @@
     
 </head>
 <style>
-    
 body,html {
  padding: 0px;
  margin: 0px;
@@ -58,6 +57,10 @@ p{
     padding:25px;
     width: 815px;
     margin: 0 auto;
+    background-image: url({{asset('images/bg2.png')}});
+    background-repeat: no-repeat;
+    background-position: center;
+    
 }
 p.receipt-title {
     text-transform: uppercase;
@@ -253,6 +256,34 @@ p.credits {
 .titles-middle p {
     text-align: right;
 }
+
+p.footer-text {
+    width: 100%;
+    direction: rtl;
+    color: #3c4588;
+    font-weight: bold;
+    text-align: center;
+}
+.footer-inner {
+    border-top: 10px solid #f66958;
+    background-color: #357b56;
+    max-height: 70px;
+    color: #fff;
+}
+p.arabic-p-footer {
+    margin-bottom: 0;
+    font-size: 8px;
+    padding: 0px 5px;
+    text-align: center;
+    direction: rtl;
+}
+p.english-p-footer {
+    margin-bottom: 0;
+    font-size: 8px;
+    padding: 0px 5px;
+    text-align: center;
+    direction: ltr;
+}
 /*************************************Responsive***********************************/
 @media (max-width:1450px){
 
@@ -369,16 +400,15 @@ p.credits {
 @media (max-width:370px){
 
 }
-  
-
-
 </style>
 
 
 
 <body>
 	<div class="main-container">
-	<header></header>
+	<header>
+        <img src="{{ URL::to('images/Aloufi_LOGO.jpg') }}" style="width:200px;height:100px;" />'
+    </header>
         
         <div class="receipt-wrapper">
             <div class="page-top"><p class="page-title">
@@ -596,7 +626,18 @@ p.credits {
             <p class="credits">Our Ac/details : Al Oufi Customs Clearance Est. A/c 132498000103  - IBAN : SA86 1000 0013 2498 0000 0103  - Bank : NCB</p>
         </div>
         </div>
-
+        <div class="reciept-footer">
+            <p class="footer-text">
+                تخليص جمركي-اعادة توجيه-نقليات-تجارة عامة-شحن
+                -
+                Clearance Forwarding Transportaion General Trading Corgo
+            </p>
+            <div class="footer-inner">
+                <p class="arabic-p-footer">مؤسسة العوفي للتخليص الجمركي ص.ب 2365 جدة 21451 المملكة العربية السعودية هاتف:6600600 - 0126673661 فاكس: 0126695219 بريد الكتروني: www.ssaloufi.com , info@ssaloufi.com</p>
+                <p class="english-p-footer">Al oufi clearance Est.P.O Box 2365,Jeddah 21451, Tel:0126600600 - 6633566 , Fax:0126695219, E-mail:info@ssaloufi, www.ssaloufi.com</p>
+            </div>
+        
+        </div>
     
     </div>
 <!----end of main container----->

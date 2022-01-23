@@ -245,13 +245,20 @@
           columns: ':visible'
         }
       },
-      {
-        extend: 'print',
-        className: 'btn-default',
-        text: printButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
+     {
+                extend: 'print',
+                className: 'btn-default',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                            '<img src="{{ URL::to('images/Aloufi_LOGO.png') }}" style="width:200px;height:100px;padding-left:400px;" />'
+                        );
+                     
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                }
       },
       {
         extend: 'colvis',

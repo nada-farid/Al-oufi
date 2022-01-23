@@ -38,6 +38,7 @@ p{
   @endsection
  
 <div class="card">
+     <img src="{{ URL::to('images/Aloufi_LOGO.png') }}" style="width:800px;height:100px;">
     <div class="card-header">
       <div class="row delivery-info">
         <div class="col-3 reciept-info-wrap">
